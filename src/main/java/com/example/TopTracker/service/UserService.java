@@ -20,7 +20,6 @@ public class UserService {
         u.setEmail(userDto.email);
         u.setUsername(userDto.username);
         u.setPassword(userDto.password);
-
         userRepo.save(u);
 
         u.getId();
@@ -29,5 +28,7 @@ public class UserService {
 
         return u;
     }
+
+
 
 }
