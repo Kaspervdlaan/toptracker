@@ -1,9 +1,6 @@
 package com.example.TopTracker.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "areas")
@@ -14,6 +11,10 @@ public class Area {
     private String name;
     private String address;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "block_id")
+    private Block block;
 
     public Area() {}
 

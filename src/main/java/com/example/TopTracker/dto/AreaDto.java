@@ -5,4 +5,6 @@ public class AreaDto {
     public String name;
     public String address;
     public String description;
+
+    public Long blockId;
 }

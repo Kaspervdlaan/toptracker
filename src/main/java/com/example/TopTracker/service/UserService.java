@@ -29,6 +29,22 @@ public class UserService {
         return u;
     }
 
+    public UserDto getUserById(Long id) {
+        User u = userRepo.findById(id).orElseThrow(() -> new RuntimeException("ppop"));
+        UserDto userDto = new UserDto();
 
+        userDto.id = u.getId();
+        userDto.firstName = u.getFirstName();
+        userDto.lastName = u.getLastName();
+        userDto.dob = u.getDob();
+        userDto.email = u.getEmail();
+        userDto.username = u.getUsername();
+        userDto.password = u.getPassword();
 
+        return userDto;
+    }
+
+    public void deleteUserById(Long id) {
+        userRepo.deleteById(id);
+    }
 }

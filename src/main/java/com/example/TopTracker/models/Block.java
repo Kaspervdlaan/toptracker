@@ -1,9 +1,8 @@
 package com.example.TopTracker.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "blocks")
@@ -13,6 +12,9 @@ public class Block {
     private Long id;
     private String blockName;
     private String stoneType;
+
+    @OneToMany(mappedBy = "block")
+    private List<Area> areas;
 
     public Block() {
     }

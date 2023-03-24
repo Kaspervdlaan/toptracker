@@ -1,8 +1,10 @@
 package com.example.TopTracker.controllers;
 
 import com.example.TopTracker.dto.AreaDto;
+import com.example.TopTracker.dto.BlockDto;
 import com.example.TopTracker.models.Area;
 import com.example.TopTracker.service.AreaService;
+import com.example.TopTracker.service.BlockService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ public class AreaController {
 
     private final AreaService areaService;
 
+
     public AreaController(AreaService areaService) {
         this.areaService = areaService;
     }
@@ -25,6 +28,8 @@ public class AreaController {
     @PostMapping
     public ResponseEntity<Area> createArea(@RequestBody AreaDto areaDto) {
         Area a = areaService.createArea(areaDto);
+
+
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(a.getName()).toUri();
 
         return ResponseEntity.created(uri).build();

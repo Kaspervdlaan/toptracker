@@ -27,4 +27,23 @@ public class UserController {
 
         return ResponseEntity.created(uri).build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        UserDto userDto = userService.getUserById(id);
+
+        return ResponseEntity.ok(userDto);
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Object> deleteUserById(@PathVariable Long id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+//    @PutMapping("/users/{id}")
+//    public ResponseEntity<Object> updateBook(@PathVariable Long id, @RequestBody String title) {
+//
+//        return ResponseEntity.noContent();
+//    }
 }
