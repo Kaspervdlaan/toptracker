@@ -19,6 +19,7 @@ public class User {
     private String password;
 
     @ManyToMany
+    @JoinColumn(name = "users")
     private List<Role> roles;
 
 

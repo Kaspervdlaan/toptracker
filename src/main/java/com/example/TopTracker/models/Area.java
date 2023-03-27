@@ -2,6 +2,8 @@ package com.example.TopTracker.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "areas")
 public class Area {
@@ -12,9 +14,8 @@ public class Area {
     private String address;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "block_id")
-    private Block block;
+    @OneToMany(mappedBy = "area")
+    private List<Block> blocks;
 
     public Area() {}
 
@@ -55,5 +56,13 @@ public class Area {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Block> getBlocks() {
+        return blocks;
+    }
+
+    public void setBlocks(List<Block> blocks) {
+        this.blocks = blocks;
     }
 }

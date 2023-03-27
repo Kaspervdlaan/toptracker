@@ -26,12 +26,12 @@ public class AreaController {
     }
 
     @PostMapping
-    public ResponseEntity<Area> createArea(@RequestBody AreaDto areaDto) {
-        Area a = areaService.createArea(areaDto);
+    public ResponseEntity<AreaDto> createArea(@RequestBody AreaDto areaDto) {
+        Long blockId = areaService.createArea(areaDto);
+        areaDto.blockId = blockId;
 
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentRequest().path("/" + blockId).toUriString());
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(a.getName()).toUri();
-
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(areaDto);
     }
 }

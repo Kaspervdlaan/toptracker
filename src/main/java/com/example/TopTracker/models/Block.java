@@ -13,8 +13,9 @@ public class Block {
     private String blockName;
     private String stoneType;
 
-    @OneToMany(mappedBy = "block")
-    private List<Area> areas;
+    @ManyToOne
+    @JoinColumn(name = "block_id")
+    private Area area;
 
     public Block() {
     }
@@ -48,4 +49,14 @@ public class Block {
     public void setStoneType(String stoneType) {
         this.stoneType = stoneType;
     }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+
 }

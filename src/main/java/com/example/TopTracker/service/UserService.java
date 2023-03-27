@@ -1,6 +1,7 @@
 package com.example.TopTracker.service;
 
 import com.example.TopTracker.dto.UserDto;
+import com.example.TopTracker.exeption.ResourceNotFoundException;
 import com.example.TopTracker.models.User;
 import com.example.TopTracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -8,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    private final UserRepository userRepo;
-    public UserService(UserRepository userRepo) { this.userRepo = userRepo; }
+    private final UserRepository userRepository;
+    public UserService(UserRepository userRepo) { this.userRepository = userRepo; }
 
 
     public User createUser(UserDto userDto) {
@@ -20,17 +21,17 @@ public class UserService {
         u.setEmail(userDto.email);
         u.setUsername(userDto.username);
         u.setPassword(userDto.password);
-        userRepo.save(u);
+        userRepository.save(u);
 
-        u.getId();
+        userDto.id = u.getId();
 
-        userRepo.save(u);
+        userRepository.save(u);
 
         return u;
     }
 
     public UserDto getUserById(Long id) {
-        User u = userRepo.findById(id).orElseThrow(() -> new RuntimeException("ppop"));
+        User u = userRepository.findById(id).orElseThrow(() -> new RuntimeException("ppop"));
         UserDto userDto = new UserDto();
 
         userDto.id = u.getId();
@@ -44,7 +45,24 @@ public class UserService {
         return userDto;
     }
 
+    public UserDto updateUser(Long id, UserDto userDto) {
+        User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This user doesn't exist"));
+
+        userDto.id = u.getId();
+        userDto.firstName = u.setFirstName();
+        userDto.lastName = u.setLastName();
+        userDto.dob = u.getDob();
+        userDto.email = u.getEmail();
+        userDto.username = u.getUsername();
+        userDto.password = u.getPassword();
+
+        userRepository.save(u);
+        userDto.id = u.getId();
+        userRepository.save(u);
+        return userDto;
+    }
+
     public void deleteUserById(Long id) {
-        userRepo.deleteById(id);
+        userRepository.deleteById(id);
     }
 }
