@@ -6,6 +6,9 @@ import com.example.TopTracker.models.User;
 import com.example.TopTracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -30,6 +33,41 @@ public class UserService {
         return u;
     }
 
+//    public List<UserDto> getAllUsers() {
+//        List<User> users = userRepository.findAll();
+//        List<UserDto> userDtos = new ArrayList<>();
+//
+//        for (User user : users) {
+//            UserDto userDto = new UserDto();
+//            userDto.setId(user.getId());
+//            userDto.setFirstName(user.getFirstName());
+//            userDto.setLastName(user.getLastName());
+//            userDto.setEmail(user.getEmail());
+//            userDtos.add(userDto);
+//        }
+//
+//        return userDtos;
+//    }
+
+    public List<UserDto> getAllUsers() {
+        List<UserDto> users = new ArrayList<>();
+        List<User> userList = userRepository.findAll();
+        UserDto userDto = new UserDto();
+        for (User u : userList) {
+
+            userDto.id = u.getId();
+            userDto.firstName = u.getFirstName();
+            userDto.lastName = u.getLastName();
+            userDto.dob = u.getDob();
+            userDto.email = u.getEmail();
+            userDto.username = u.getUsername();
+            userDto.password = u.getPassword();
+            users.add(userDto);
+        }
+
+        return users;
+    }
+
     public UserDto getUserById(Long id) {
         User u = userRepository.findById(id).orElseThrow(() -> new RuntimeException("ppop"));
         UserDto userDto = new UserDto();
@@ -49,8 +87,8 @@ public class UserService {
         User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This user doesn't exist"));
 
         userDto.id = u.getId();
-        userDto.firstName = u.setFirstName();
-        userDto.lastName = u.setLastName();
+        userDto.firstName = u.getFirstName();
+        userDto.lastName = u.getLastName();
         userDto.dob = u.getDob();
         userDto.email = u.getEmail();
         userDto.username = u.getUsername();
@@ -63,6 +101,7 @@ public class UserService {
     }
 
     public void deleteUserById(Long id) {
-        userRepository.deleteById(id);
+        User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        userRepository.delete(u);
     }
 }

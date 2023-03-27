@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("users")
@@ -28,6 +29,16 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
+
+    @GetMapping
+    public ResponseEntity<List<UserDto>> getUsers() {
+
+        List<UserDto> userDtos = userService.getAllUsers();
+
+        return ResponseEntity.ok().body(userDtos);
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         UserDto userDto = userService.getUserById(id);
@@ -42,7 +53,7 @@ public class UserController {
     }
 
 //    @PutMapping("/users/{id}")
-//    public ResponseEntity<Object> updateBook(@PathVariable Long id, @RequestBody String title) {
+//    public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody String title) {
 //
 //        return ResponseEntity.noContent();
 //    }

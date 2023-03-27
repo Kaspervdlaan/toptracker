@@ -24,7 +24,7 @@ public class AreaService {
         a.setDescription(areaDto.description);
 
         Block b = blockRepo.findById(areaDto.blockId).get();
-        a.setBlocks(b);
+        a.setBlocks(b.getArea().getBlocks());
 
         areaRepo.save(a);
 
