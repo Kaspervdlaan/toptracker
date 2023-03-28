@@ -2,11 +2,9 @@ package com.example.TopTracker.service;
 
 import com.example.TopTracker.dto.AreaDto;
 import com.example.TopTracker.dto.BlockDto;
-import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
-import com.example.TopTracker.models.Area;
 import com.example.TopTracker.models.Block;
-import com.example.TopTracker.models.User;
+import com.example.TopTracker.repository.AreaRepository;
 import com.example.TopTracker.repository.BlockRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,11 @@ import java.util.List;
 public class BlockService {
     private final BlockRepository blockRepository;
 
-    public BlockService(BlockRepository blockRepo) {
+    private final AreaRepository areaRepository;
+
+    public BlockService(BlockRepository blockRepo, AreaRepository areaRepository) {
         this.blockRepository = blockRepo;
+        this.areaRepository = areaRepository;
     }
 
     public Block createBlock(BlockDto blockDto) {

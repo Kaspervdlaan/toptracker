@@ -18,9 +18,8 @@ public class User {
     private String username;
     private String password;
 
-    @ManyToMany
-    @JoinColumn(name = "users")
-    private List<Role> roles;
+//    @ManyToOne
+//    private List<Role> roles;
 
 
     public User(Long id, String firstName, String lastName, Date dob, String email, String username, String password, List<Role> roles) {
@@ -31,7 +30,7 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.roles = roles;
+//        this.roles = roles;
     }
 
 //    public User(Long id, String firstName, String lastName, Date dob, String email, String username, String password, Role role) {
@@ -105,11 +104,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
+//    public List<Role> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(List<Role> roles) {
+//        this.roles = roles;
+//    }
 }

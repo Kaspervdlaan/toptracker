@@ -14,16 +14,20 @@ public class Block {
     private String stoneType;
 
     @ManyToOne
-    @JoinColumn(name = "block_id")
     private Area area;
+
+    @OneToMany(mappedBy = "block")
+    private List<Boulder> boulders;
 
     public Block() {
     }
 
-    public Block(Long id, String blockName, String stoneType) {
+    public Block(Long id, String blockName, String stoneType, Area area, List<Boulder> boulders) {
         this.id = id;
         this.blockName = blockName;
         this.stoneType = stoneType;
+        this.area = area;
+        this.boulders = boulders;
     }
 
     public Long getId() {
@@ -58,5 +62,11 @@ public class Block {
         this.area = area;
     }
 
+    public List<Boulder> getBoulders() {
+        return boulders;
+    }
 
+    public void setBoulders(List<Boulder> boulders) {
+        this.boulders = boulders;
+    }
 }

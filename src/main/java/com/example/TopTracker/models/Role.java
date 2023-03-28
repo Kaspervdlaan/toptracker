@@ -1,9 +1,7 @@
 package com.example.TopTracker.models;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,10 +13,16 @@ public class Role {
 
     private String roleName;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+//    @OneToMany(mappedBy = "roles")
+//    private List<User> users;
 
     public Role() {
+    }
+
+    public Role(Long id, String roleName, List<User> users) {
+        this.id = id;
+        this.roleName = roleName;
+//        this.users = users;
     }
 
     public Long getId() {
@@ -37,11 +41,11 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+//    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
 }

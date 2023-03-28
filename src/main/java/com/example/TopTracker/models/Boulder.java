@@ -1,9 +1,6 @@
 package com.example.TopTracker.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "boulders")
@@ -18,16 +15,20 @@ public class Boulder {
 
     private String boulderImage;
 
+    @ManyToOne
+    private Block block;
+
     public Boulder() {
     }
 
-    public Boulder(Long id, String boulderName, String boulderGrade, String holdType, String boulderNotes, String boulderImage) {
+    public Boulder(Long id, String boulderName, String boulderGrade, String holdType, String boulderNotes, String boulderImage, Block block) {
         this.id = id;
         this.boulderName = boulderName;
         this.boulderGrade = boulderGrade;
         this.holdType = holdType;
         this.boulderNotes = boulderNotes;
-        this.boulderImage = boulderImage; // needs updating to MultipartFile
+        this.boulderImage = boulderImage;
+        this.block = block;
     }
 
     public Long getId() {
@@ -76,5 +77,13 @@ public class Boulder {
 
     public void setBoulderImage(String boulderImage) {
         this.boulderImage = boulderImage;
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public void setBlock(Block block) {
+        this.block = block;
     }
 }

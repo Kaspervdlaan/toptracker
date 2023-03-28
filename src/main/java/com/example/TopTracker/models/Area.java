@@ -19,11 +19,12 @@ public class Area {
 
     public Area() {}
 
-    public Area(Long id, String name, String address, String description) {
+    public Area(Long id, String name, String address, String description, List<Block> blocks) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.description = description;
+        this.blocks = blocks;
     }
 
     public Long getId() {
