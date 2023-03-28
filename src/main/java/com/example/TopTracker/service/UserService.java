@@ -27,8 +27,6 @@ public class UserService {
         u.setPassword(userDto.password);
 
         userRepository.save(u);
-        userDto.id = u.getId();
-        userRepository.save(u);
 
         return u;
     }

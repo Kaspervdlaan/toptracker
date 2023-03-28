@@ -13,8 +13,8 @@ public class Role {
 
     private String roleName;
 
-//    @OneToMany(mappedBy = "roles")
-//    private List<User> users;
+    @ManyToMany(mappedBy = "roles")
+    private List<User> users;
 
     public Role() {
     }
@@ -22,7 +22,7 @@ public class Role {
     public Role(Long id, String roleName, List<User> users) {
         this.id = id;
         this.roleName = roleName;
-//        this.users = users;
+        this.users = users;
     }
 
     public Long getId() {
@@ -41,11 +41,11 @@ public class Role {
         this.roleName = roleName;
     }
 
-//    public List<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(List<User> users) {
-//        this.users = users;
-//    }
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 }

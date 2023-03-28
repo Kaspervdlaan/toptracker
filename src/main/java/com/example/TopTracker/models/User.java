@@ -9,7 +9,8 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY,
+            generator = "sequence-generator")
     private Long id;
     private String firstName;
     private String lastName;
@@ -18,8 +19,8 @@ public class User {
     private String username;
     private String password;
 
-//    @ManyToOne
-//    private List<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> roles;
 
 
     public User(Long id, String firstName, String lastName, Date dob, String email, String username, String password, List<Role> roles) {
@@ -104,11 +105,11 @@ public class User {
         this.password = password;
     }
 
-//    public List<Role> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(List<Role> roles) {
-//        this.roles = roles;
-//    }
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }
