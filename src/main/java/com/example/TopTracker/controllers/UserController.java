@@ -4,9 +4,13 @@ import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.models.User;
 import com.example.TopTracker.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.Authenticator;
 import java.net.URI;
 import java.util.List;
 
@@ -33,6 +37,11 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getUsers() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (auth.getPrincipal() instanceof UserDetails) {
+//            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+//
+//        }
 
         List<UserDto> userDtos = userService.getAllUsers();
 
@@ -47,13 +56,7 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Object> deleteUserById(@PathVariable Long id) {
-        userService.deleteUserById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
         UserDto userDTO = userService.updateUser(id, userDto);
 
@@ -61,5 +64,10 @@ public class UserController {
                 .buildAndExpand(userDTO).toUri();
 
         return ResponseEntity.created(uri).body(userDTO);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteUserById(@PathVariable Long id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
     }
 }

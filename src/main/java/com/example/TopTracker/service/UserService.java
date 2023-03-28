@@ -53,7 +53,7 @@ public class UserService {
     }
 
     public UserDto getUserById(Long id) {
-        User u = userRepository.findById(id).orElseThrow(() -> new RuntimeException("ppop"));
+        User u = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         UserDto userDto = new UserDto();
 
         userDto.id = u.getId();
@@ -68,9 +68,8 @@ public class UserService {
     }
 
     public UserDto updateUser(Long id, UserDto userDto) {
-        User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This user doesn't exist"));
+        User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        userDto.id = u.getId();
         u.setFirstName(userDto.getFirstName());
         u.setLastName(userDto.getLastName());
         u.setEmail(userDto.getEmail());
