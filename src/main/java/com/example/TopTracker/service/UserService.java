@@ -18,17 +18,17 @@ public class UserService {
 
     public User createUser(UserDto userDto) {
         User u = new User();
+
         u.setFirstName(userDto.firstName);
         u.setLastName(userDto.lastName);
         u.setDob(userDto.dob);
         u.setEmail(userDto.email);
         u.setUsername(userDto.username);
         u.setPassword(userDto.password);
-        userRepository.save(u);
 
-//        userDto.id = u.getId();
-//
-//        userRepository.save(u);
+        userRepository.save(u);
+        userDto.id = u.getId();
+        userRepository.save(u);
 
         return u;
     }

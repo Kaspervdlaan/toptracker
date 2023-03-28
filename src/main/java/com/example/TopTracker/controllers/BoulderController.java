@@ -24,8 +24,9 @@ public class BoulderController {
     @PostMapping
     public ResponseEntity<Boulder> createBoulder(@RequestBody BoulderDto boulderDto) {
         Boulder b = boulderService.createBoulder(boulderDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(b.getBoulderName()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .buildAndExpand(boulderDto).toUri();
 
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(b);
     }
 }

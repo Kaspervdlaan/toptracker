@@ -24,8 +24,9 @@ public class AttemptController {
     @PostMapping
     public ResponseEntity<Attempt> addAttempt(@RequestBody AttemptDto attemptDto) {
         Attempt a = attemptService.addAttempt(attemptDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(a.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .buildAndExpand(attemptDto).toUri();
 
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(a);
     }
 }

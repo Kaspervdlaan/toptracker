@@ -25,9 +25,10 @@ public class RoleController {
     public ResponseEntity<Role> createRole(@RequestBody RoleDto roleDto) {
 
         Role r = roleService.addRole(roleDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(r.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .buildAndExpand(roleDto).toUri();
 
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(r);
     }
 
 }

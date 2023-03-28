@@ -24,8 +24,9 @@ public class BlockController {
     @PostMapping
     public ResponseEntity<Block> createBlock(@RequestBody BlockDto blockDto) {
         Block b = blockService.createBlock(blockDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(b.getBlockName()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .buildAndExpand(blockDto).toUri();
 
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(b);
     }
 }

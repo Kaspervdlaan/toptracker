@@ -9,25 +9,28 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AreaService {
-    private final AreaRepository areaRepo;
-    private final BlockRepository blockRepo;
+    private final AreaRepository areaRepository;
+    private final BlockRepository blockRepository;
 
     public AreaService(AreaRepository areaRepo, BlockRepository blockRepo) {
-        this.areaRepo = areaRepo;
-        this.blockRepo = blockRepo;
+        this.areaRepository = areaRepo;
+        this.blockRepository = blockRepo;
     }
 
-    public Long createArea(AreaDto areaDto) {
+    public Area createArea(AreaDto areaDto) {
         Area a = new Area();
         a.setName(areaDto.name);
         a.setAddress(areaDto.address);
         a.setDescription(areaDto.description);
 
-        Block b = blockRepo.findById(areaDto.blockId).get();
-        a.setBlocks(b.getArea().getBlocks());
+//        Block b = blockRepository.findById(areaDto.blockId).get();
+//        a.setBlocks(b.getArea().getBlocks());
 
-        areaRepo.save(a);
+        areaRepository.save(a);
 
-        return a.getId();
+        a.getId();
+        areaRepository.save(a);
+
+        return a;
     }
 }
