@@ -24,9 +24,10 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody UserDto userDto) {
 
         User u = userService.createUser(userDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(u.getUsername()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .buildAndExpand(userDto).toUri();
 
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(u);
     }
 
 
@@ -46,15 +47,19 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
 
-//    @PutMapping("/users/{id}")
-//    public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody String title) {
-//
-//        return ResponseEntity.noContent();
-//    }
+    @PutMapping("{id}")
+    public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+        UserDto userDTO = userService.updateUser(id, userDto);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .buildAndExpand(userDTO).toUri();
+
+        return ResponseEntity.created(uri).body(userDTO);
+    }
 }

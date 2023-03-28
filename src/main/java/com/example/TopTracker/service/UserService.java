@@ -26,28 +26,12 @@ public class UserService {
         u.setPassword(userDto.password);
         userRepository.save(u);
 
-        userDto.id = u.getId();
-
-        userRepository.save(u);
+//        userDto.id = u.getId();
+//
+//        userRepository.save(u);
 
         return u;
     }
-
-//    public List<UserDto> getAllUsers() {
-//        List<User> users = userRepository.findAll();
-//        List<UserDto> userDtos = new ArrayList<>();
-//
-//        for (User user : users) {
-//            UserDto userDto = new UserDto();
-//            userDto.setId(user.getId());
-//            userDto.setFirstName(user.getFirstName());
-//            userDto.setLastName(user.getLastName());
-//            userDto.setEmail(user.getEmail());
-//            userDtos.add(userDto);
-//        }
-//
-//        return userDtos;
-//    }
 
     public List<UserDto> getAllUsers() {
         List<UserDto> users = new ArrayList<>();
@@ -87,12 +71,12 @@ public class UserService {
         User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This user doesn't exist"));
 
         userDto.id = u.getId();
-        userDto.firstName = u.getFirstName();
-        userDto.lastName = u.getLastName();
-        userDto.dob = u.getDob();
-        userDto.email = u.getEmail();
-        userDto.username = u.getUsername();
-        userDto.password = u.getPassword();
+        u.setFirstName(userDto.getFirstName());
+        u.setLastName(userDto.getLastName());
+        u.setEmail(userDto.getEmail());
+        u.setDob(userDto.getDob());
+        u.setUsername(userDto.getUsername());
+        u.setPassword(userDto.getPassword());
 
         userRepository.save(u);
         userDto.id = u.getId();
