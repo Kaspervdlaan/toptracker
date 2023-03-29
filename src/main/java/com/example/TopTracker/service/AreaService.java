@@ -1,26 +1,25 @@
 package com.example.TopTracker.service;
 
 import com.example.TopTracker.dto.AreaDto;
-import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
 import com.example.TopTracker.models.Area;
 import com.example.TopTracker.models.Block;
-import com.example.TopTracker.models.User;
 import com.example.TopTracker.repository.AreaRepository;
 import com.example.TopTracker.repository.BlockRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AreaService {
     private final AreaRepository areaRepository;
-//    private final BlockRepository blockRepository;
+    private final BlockRepository blockRepository;
 
-    public AreaService(AreaRepository areaRepo) { //, BlockRepository blockRepo
+    public AreaService(AreaRepository areaRepo, BlockRepository blockRepository) {
         this.areaRepository = areaRepo;
-//        this.blockRepository = blockRepo;
+        this.blockRepository = blockRepository;
     }
 
     public Area createArea(AreaDto areaDto) {
@@ -29,12 +28,6 @@ public class AreaService {
         a.setAddress(areaDto.address);
         a.setDescription(areaDto.description);
 
-//        Block b = blockRepository.findById(areaDto.blockId).get();
-//        a.setBlocks(b.getArea().getBlocks());
-
-        areaRepository.save(a);
-
-        areaDto.id = a.getId();
         areaRepository.save(a);
 
         return a;
@@ -43,9 +36,9 @@ public class AreaService {
     public List<AreaDto> getAllAreas() {
         List<AreaDto> areas = new ArrayList<>();
         List<Area> areaList = areaRepository.findAll();
-        AreaDto areaDto = new AreaDto();
-        for (Area a : areaList) {
 
+        for (Area a : areaList) {
+            AreaDto areaDto = new AreaDto();
             areaDto.id = a.getId();
             areaDto.name = a.getName();
             areaDto.address = a.getAddress();
@@ -67,6 +60,19 @@ public class AreaService {
 
         return areaDto;
     }
+
+//    public void addBlockToArea(Long areaId, Long blockId) {
+//        Optional<Area> optionalArea = areaRepository.findById(areaId);
+//        Optional<Block> optionalBlock = blockRepository.findById(blockId);
+//
+//        if (!optionalBlock.isEmpty() && !optionalArea.isEmpty()) {
+//            Area a = optionalArea.get();
+//            Block b = optionalBlock.get();
+//
+//            b.setArea(a);
+//            blockRepository.save(b);
+//        }
+//    }
 
     public AreaDto updateArea(Long id, AreaDto areaDto) {
         Area a = areaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));

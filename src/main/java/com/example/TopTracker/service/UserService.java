@@ -13,10 +13,13 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    public UserService(UserRepository userRepo) { this.userRepository = userRepo; }
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
 
-    public User createUser(UserDto userDto) {
+    public Long createUser(UserDto userDto) {
         User u = new User();
 
         u.setFirstName(userDto.firstName);
@@ -28,15 +31,16 @@ public class UserService {
 
         userRepository.save(u);
 
-        return u;
+        return u.getId();
     }
 
     public List<UserDto> getAllUsers() {
         List<UserDto> users = new ArrayList<>();
         List<User> userList = userRepository.findAll();
-        UserDto userDto = new UserDto();
-        for (User u : userList) {
 
+
+        for (User u : userList) {
+            UserDto userDto = new UserDto();
             userDto.id = u.getId();
             userDto.firstName = u.getFirstName();
             userDto.lastName = u.getLastName();

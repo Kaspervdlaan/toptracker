@@ -26,19 +26,15 @@ public class AttemptService {
 
         attemptRepo.save(a);
 
-        attemptDto.id = a.getId();
-
-        attemptRepo.save(a);
-
         return a;
     }
 
     public List<AttemptDto> getAllAttempts() {
         List<AttemptDto> attempts = new ArrayList<>();
         List<Attempt> attemptList = attemptRepo.findAll();
-        AttemptDto attemptDto = new AttemptDto();
-        for (Attempt a : attemptList) {
 
+        for (Attempt a : attemptList) {
+            AttemptDto attemptDto = new AttemptDto();
             attemptDto.id = a.getId();
             attemptDto.notes = a.getNotes();
             attemptDto.send = a.isSend();

@@ -1,5 +1,7 @@
 package com.example.TopTracker.dto;
 
+import com.example.TopTracker.models.User;
+
 import java.util.Date;
 
 public class UserDto {

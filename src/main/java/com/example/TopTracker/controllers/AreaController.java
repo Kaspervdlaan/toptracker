@@ -43,6 +43,13 @@ public class AreaController {
         return ResponseEntity.ok(areaDto);
     }
 
+//    @PostMapping("/{area_id}/blocks/{block_id}")
+//    public ResponseEntity<Object> addBlockToArea(@PathVariable("area_id") Long area_id, @PathVariable("block_id") Long block_id) {
+//        areaService.addBlockToArea(area_id, block_id);
+//
+//        return ResponseEntity.noContent().build();
+//    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateArea(@PathVariable Long id, @RequestBody AreaDto areaDto) {
         AreaDto areaDTO = areaService.updateArea(id, areaDto);

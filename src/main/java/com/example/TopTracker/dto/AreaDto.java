@@ -1,12 +1,17 @@
 package com.example.TopTracker.dto;
 
+import com.example.TopTracker.models.Block;
+
+import java.util.List;
+
 public class AreaDto {
     public Long id;
     public String name;
     public String address;
     public String description;
 
-    public Long blockId;
+
+    public List<Block> blocks;
 
     public Long getId() {
         return id;
@@ -40,11 +45,11 @@ public class AreaDto {
         this.description = description;
     }
 
-    public Long getBlockId() {
-        return blockId;
+    public List getBlocks() {
+        return blocks;
     }
 
-    public void setBlockId(Long blockId) {
-        this.blockId = blockId;
+    public void setBlocks(List blocks) {
+        this.blocks = blocks;
     }
 }

@@ -3,6 +3,7 @@ package com.example.TopTracker.service;
 import com.example.TopTracker.dto.AreaDto;
 import com.example.TopTracker.dto.BlockDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
+import com.example.TopTracker.models.Area;
 import com.example.TopTracker.models.Block;
 import com.example.TopTracker.repository.AreaRepository;
 import com.example.TopTracker.repository.BlockRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BlockService {
@@ -29,18 +31,18 @@ public class BlockService {
         b.setStoneType(blockDto.stoneType);
 
         blockRepository.save(b);
-        blockDto.id = b.getId();
-        blockRepository.save(b);
 
         return b;
     }
 
+
+
     public List<BlockDto> getAllBlocks() {
         List<BlockDto> blocks = new ArrayList<>();
         List<Block> blockList = blockRepository.findAll();
-        BlockDto blockDto = new BlockDto();
-        for (Block b : blockList) {
 
+        for (Block b : blockList) {
+            BlockDto blockDto = new BlockDto();
             blockDto.id = b.getId();
             blockDto.blockName = b.getBlockName();
             blockDto.stoneType = b.getStoneType();
@@ -51,7 +53,7 @@ public class BlockService {
         return blocks;
     }
 
-    public BlockDto getUserById(Long id) {
+    public BlockDto getBlockById(Long id) {
         Block b = blockRepository.findById(id).orElseThrow(() -> new RuntimeException("Block not found"));
         BlockDto blockDto = new BlockDto();
 
@@ -60,6 +62,19 @@ public class BlockService {
         blockDto.stoneType = b.getStoneType();
 
         return blockDto;
+    }
+
+    public void addBlockToArea(Long blockId, Long areaId) {
+        Optional<Area> optionalArea = areaRepository.findById(areaId);
+        Optional<Block> optionalBlock = blockRepository.findById(blockId);
+
+        if (!optionalBlock.isEmpty() && !optionalArea.isEmpty()) {
+            Area a = optionalArea.get();
+            Block b = optionalBlock.get();
+
+            b.setArea(a);
+            blockRepository.save(b);
+        }
     }
 
     public BlockDto updateBlock(Long id , BlockDto blockDto){

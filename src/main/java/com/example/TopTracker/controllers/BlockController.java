@@ -1,8 +1,8 @@
 package com.example.TopTracker.controllers;
 
 import com.example.TopTracker.dto.BlockDto;
-import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.models.Block;
+import com.example.TopTracker.service.AreaService;
 import com.example.TopTracker.service.BlockService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +15,11 @@ import java.util.List;
 @RequestMapping("blocks")
 public class BlockController {
     private final BlockService blockService;
+    private final AreaService areaService;
 
-    public BlockController(BlockService blockService) {
+    public BlockController(BlockService blockService, AreaService areaService) {
         this.blockService = blockService;
+        this.areaService = areaService;
     }
 
     @PostMapping
@@ -38,10 +40,18 @@ public class BlockController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BlockDto> getBlockById(@PathVariable Long id) {
-        BlockDto blockDto = blockService.getUserById(id);
+        BlockDto blockDto = blockService.getBlockById(id);
 
         return ResponseEntity.ok(blockDto);
     }
+
+    @PostMapping("/{block_id}/areas/{area_id}")
+    public ResponseEntity<Object> addBlockToArea(@PathVariable("area_id") Long area_id, @PathVariable("block_id") Long block_id) {
+        blockService.addBlockToArea(area_id, block_id);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateBlockById(@PathVariable Long id, @RequestBody BlockDto blockDto) {
