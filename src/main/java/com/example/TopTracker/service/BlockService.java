@@ -87,18 +87,18 @@ public class BlockService {
         return blockDto;
     }
 
-    public void addBlockToArea(Long blockId, Long areaId) {
-        Optional<Area> optionalArea = areaRepository.findById(areaId);
-        Optional<Block> optionalBlock = blockRepository.findById(blockId);
-
-        if (!optionalBlock.isEmpty() && !optionalArea.isEmpty()) {
-            Area a = optionalArea.get();
-            Block b = optionalBlock.get();
-
-            b.setArea(a);
-            blockRepository.save(b);
-        }
-    }
+//    public void addBlockToArea(Long blockId, Long areaId) {
+//        Optional<Area> optionalArea = areaRepository.findById(areaId);
+//        Optional<Block> optionalBlock = blockRepository.findById(blockId);
+//
+//        if (!optionalBlock.isEmpty() && !optionalArea.isEmpty()) {
+//            Area a = optionalArea.get();
+//            Block b = optionalBlock.get();
+//
+//            b.setArea(a);
+//            blockRepository.save(b);
+//        }
+//    }
 
     public BlockDto updateBlock(Long id , BlockDto blockDto){
         Block b = blockRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Block not found"));

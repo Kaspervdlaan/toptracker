@@ -21,10 +21,10 @@ public class AreaController {
     }
 
     @PostMapping
-    public ResponseEntity<Area> createArea(@RequestBody AreaDto areaDto) {
-        Area a = areaService.createArea(areaDto);
+    public ResponseEntity<AreaDto> createArea(@RequestBody AreaDto areaDto) {
+        AreaDto a = areaService.createArea(areaDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .buildAndExpand(areaDto).toUri();
+                .buildAndExpand(a.getBlocks()).toUri();
 
         return ResponseEntity.created(uri).body(a);
     }

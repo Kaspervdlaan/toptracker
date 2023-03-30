@@ -11,7 +11,7 @@ public class AreaDto {
     public String description;
 
 
-//    public List<Long> blocks;
+    public List<Long> blocks;
 
     public AreaDto() {  }
 
@@ -20,7 +20,7 @@ public class AreaDto {
         this.name = name;
         this.address = address;
         this.description = description;
-//        this.blocks = blocks;
+        this.blocks = blocks;
     }
 
     public Long getId() {
@@ -55,11 +55,11 @@ public class AreaDto {
         this.description = description;
     }
 
-//    public List<Long> getBlocks() {
-//        return blocks;
-//    }
-//
-//    public void setBlocks(List<Long> blocks) {
-//        this.blocks = blocks;
-//    }
+    public List<Long> getBlocks() {
+        return blocks;
+    }
+
+    public void setBlocks(List<Long> blocks) {
+        this.blocks = blocks;
+    }
 }

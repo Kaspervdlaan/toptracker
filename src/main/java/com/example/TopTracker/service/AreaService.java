@@ -23,15 +23,24 @@ public class AreaService {
         this.blockRepository = blockRepository;
     }
 
-    public Area createArea(AreaDto areaDto) {
+    public AreaDto createArea(AreaDto areaDto) {
         Area a = new Area();
+        AreaDto areaDTO = new AreaDto();
+
         a.setName(areaDto.name);
         a.setAddress(areaDto.address);
         a.setDescription(areaDto.description);
-        
-        areaRepository.save(a);
 
-        return a;
+
+        Area area = areaRepository.save(a);
+        areaDTO.setName(area.getName());
+        areaDTO.setAddress(area.getAddress());
+        areaDTO.setDescription(area.getDescription());
+
+
+        areaDTO.setId(area.getId());
+
+        return areaDTO;
     }
 
     public List<AreaDto> getAllAreas() {
@@ -83,8 +92,7 @@ public class AreaService {
         a.setDescription(areaDto.getDescription());
 
         areaRepository.save(a);
-        areaDto.id = a.getId();
-        areaRepository.save(a);
+
         return areaDto;
     }
 

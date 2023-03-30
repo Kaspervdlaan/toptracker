@@ -22,10 +22,10 @@ public class BoulderController {
     }
 
     @PostMapping
-    public ResponseEntity<Boulder> createBoulder(@RequestBody BoulderDto boulderDto) {
-        Boulder b = boulderService.createBoulder(boulderDto);
+    public ResponseEntity<BoulderDto> createBoulder(@RequestBody BoulderDto boulderDto) {
+        BoulderDto b = boulderService.createBoulder(boulderDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .buildAndExpand(boulderDto).toUri();
+                .buildAndExpand(b.getId()).toUri();
 
         return ResponseEntity.created(uri).body(b);
     }

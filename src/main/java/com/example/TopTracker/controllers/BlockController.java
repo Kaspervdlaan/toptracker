@@ -1,7 +1,6 @@
 package com.example.TopTracker.controllers;
 
 import com.example.TopTracker.dto.BlockDto;
-import com.example.TopTracker.models.Block;
 import com.example.TopTracker.service.AreaService;
 import com.example.TopTracker.service.BlockService;
 import org.springframework.http.ResponseEntity;
@@ -45,12 +44,12 @@ public class BlockController {
         return ResponseEntity.ok(blockDto);
     }
 
-    @PostMapping("/{block_id}/areas/{area_id}")
-    public ResponseEntity<Object> addBlockToArea(@PathVariable("area_id") Long area_id, @PathVariable("block_id") Long block_id) {
-        blockService.addBlockToArea(area_id, block_id);
-
-        return ResponseEntity.noContent().build();
-    }
+//    @PostMapping("/{block_id}/areas/{area_id}")
+//    public ResponseEntity<Object> addBlockToArea(@PathVariable("area_id") Long area_id, @PathVariable("block_id") Long block_id) {
+//        blockService.addBlockToArea(area_id, block_id);
+//
+//        return ResponseEntity.noContent().build();
+//    }
 
 
     @PutMapping("/{id}")

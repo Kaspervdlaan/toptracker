@@ -16,6 +16,7 @@ public class Boulder {
     private String boulderImage;
 
     @ManyToOne
+    @JoinColumn(name = "block_id")
     private Block block;
 
     public Boulder() {
