@@ -31,7 +31,6 @@ public class AreaService {
         a.setAddress(areaDto.address);
         a.setDescription(areaDto.description);
 
-
         Area area = areaRepository.save(a);
         areaDTO.setName(area.getName());
         areaDTO.setAddress(area.getAddress());

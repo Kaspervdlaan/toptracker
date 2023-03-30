@@ -1,9 +1,11 @@
 package com.example.TopTracker.dto;
 
+import com.example.TopTracker.models.Attempt;
 import com.example.TopTracker.models.Role;
 import com.example.TopTracker.models.User;
 
 import java.util.Date;
+import java.util.List;
 
 public class UserDto {
     public Long id;
@@ -15,6 +17,8 @@ public class UserDto {
     public String password;
 
     public Long role_id;
+
+    public List<Attempt> attempts;
 
     public UserDto() {
     }
@@ -92,5 +96,13 @@ public class UserDto {
 
     public void setRole_id(Long role_id) {
         this.role_id = role_id;
+    }
+
+    public List<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(List<Attempt> attempts) {
+        this.attempts = attempts;
     }
 }

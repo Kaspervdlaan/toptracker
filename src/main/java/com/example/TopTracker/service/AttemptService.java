@@ -1,37 +1,57 @@
 package com.example.TopTracker.service;
 
-import com.example.TopTracker.dto.AreaDto;
 import com.example.TopTracker.dto.AttemptDto;
-import com.example.TopTracker.models.Area;
+
 import com.example.TopTracker.models.Attempt;
+import com.example.TopTracker.models.Block;
+import com.example.TopTracker.models.User;
 import com.example.TopTracker.repository.AttemptRepository;
+import com.example.TopTracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AttemptService {
-    private final AttemptRepository attemptRepo;
+    private final AttemptRepository attemptRepository;
+    private final UserRepository userRepository;
 
-    public AttemptService(AttemptRepository attemptRepo) {
-        this.attemptRepo = attemptRepo;
+    public AttemptService(AttemptRepository attemptRepository, UserRepository userRepository) {
+        this.attemptRepository = attemptRepository;
+        this.userRepository = userRepository;
     }
 
-    public Attempt addAttempt(AttemptDto attemptDto) {
+    public AttemptDto addAttempt(AttemptDto attemptDto) {
         Attempt a = new Attempt();
+        AttemptDto attemptDTO = new AttemptDto();
+
         a.setSend(attemptDto.send);
         a.setNotes(attemptDto.notes);
         a.setVideo(attemptDto.video);
 
-        attemptRepo.save(a);
+        if (attemptDto.user_id != null ) {
+            Optional<User> userOptional = userRepository.findById(attemptDto.user_id);
 
-        return a;
+            if (userOptional.isPresent()) {
+                a.setUser_id(userOptional.get().getId());
+            }
+        }
+
+        Attempt attempt = attemptRepository.save(a);
+        attemptDTO.setSend(attempt.isSend());
+        attemptDTO.setNotes(attemptDto.notes);
+        attemptDTO.setVideo(attemptDto.getVideo());
+
+        attempt.setId(attempt.getId());
+
+        return attemptDTO;
     }
 
     public List<AttemptDto> getAllAttempts() {
         List<AttemptDto> attempts = new ArrayList<>();
-        List<Attempt> attemptList = attemptRepo.findAll();
+        List<Attempt> attemptList = attemptRepository.findAll();
 
         for (Attempt a : attemptList) {
             AttemptDto attemptDto = new AttemptDto();

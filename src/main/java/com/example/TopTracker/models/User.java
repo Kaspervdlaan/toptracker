@@ -3,6 +3,7 @@ package com.example.TopTracker.models;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -21,8 +22,11 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role roles;
 
+    @OneToMany(mappedBy = "user_id")
+    private List<Attempt> attempts;
 
-    public User(Long id, String firstName, String lastName, Date dob, String email, String username, String password, Role roles) {
+
+    public User(Long id, String firstName, String lastName, Date dob, String email, String username, String password, Role roles, List<Attempt> attempts) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,8 +35,8 @@ public class User {
         this.username = username;
         this.password = password;
         this.roles = roles;
+        this.attempts = attempts;
     }
-
 
     public User() {
 
@@ -100,5 +104,13 @@ public class User {
 
     public void setRole(Role role) {
         this.roles = role;
+    }
+
+    public List<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(List<Attempt> attempts) {
+        this.attempts = attempts;
     }
 }

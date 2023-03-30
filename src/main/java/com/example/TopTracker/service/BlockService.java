@@ -18,8 +18,8 @@ public class BlockService {
 
     private final AreaRepository areaRepository;
 
-    public BlockService(BlockRepository blockRepo, AreaRepository areaRepository) {
-        this.blockRepository = blockRepo;
+    public BlockService(BlockRepository blockRepository, AreaRepository areaRepository) {
+        this.blockRepository = blockRepository;
         this.areaRepository = areaRepository;
     }
 
