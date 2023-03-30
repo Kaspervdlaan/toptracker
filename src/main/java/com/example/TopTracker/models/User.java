@@ -10,6 +10,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
     private String firstName;
     private String lastName;
@@ -22,9 +23,9 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role roles;
 
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private List<Attempt> attempts;
-
 
     public User(Long id, String firstName, String lastName, Date dob, String email, String username, String password, Role roles, List<Attempt> attempts) {
         this.id = id;

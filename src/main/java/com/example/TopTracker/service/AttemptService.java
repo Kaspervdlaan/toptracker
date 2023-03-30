@@ -43,6 +43,7 @@ public class AttemptService {
         attemptDTO.setSend(attempt.isSend());
         attemptDTO.setNotes(attemptDto.notes);
         attemptDTO.setVideo(attemptDto.getVideo());
+        attemptDTO.setUser_id(attemptDto.getUser_id());
 
         attempt.setId(attempt.getId());
 
@@ -60,6 +61,9 @@ public class AttemptService {
             attemptDto.send = a.isSend();
             attempts.add(attemptDto);
 //            attemptDto.video = a.getVideo();
+            attemptDto.setUser_id(a.getUser_id());
+
+            attempts.add(attemptDto);
         }
 
 

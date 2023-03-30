@@ -2,8 +2,10 @@ package com.example.TopTracker.service;
 
 import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
+import com.example.TopTracker.models.Attempt;
 import com.example.TopTracker.models.Role;
 import com.example.TopTracker.models.User;
+import com.example.TopTracker.repository.AttemptRepository;
 import com.example.TopTracker.repository.RoleRepository;
 import com.example.TopTracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    private final AttemptRepository attemptRepository;
+
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, AttemptRepository attemptRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.attemptRepository = attemptRepository;
     }
 
 
@@ -42,6 +47,8 @@ public class UserService {
                 u.setRole(roleOptional.get());
             }
         }
+
+
 
         User user = userRepository.save(u);
         userDTO.setFirstName(user.getFirstName());
