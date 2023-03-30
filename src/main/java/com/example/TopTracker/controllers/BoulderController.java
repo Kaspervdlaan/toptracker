@@ -1,16 +1,15 @@
 package com.example.TopTracker.controllers;
 
+import com.example.TopTracker.dto.BlockDto;
 import com.example.TopTracker.dto.BoulderDto;
 import com.example.TopTracker.models.Boulder;
 import com.example.TopTracker.service.BoulderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("boulders")
@@ -28,5 +27,35 @@ public class BoulderController {
                 .buildAndExpand(b.getId()).toUri();
 
         return ResponseEntity.created(uri).body(b);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BoulderDto>> getBoulders() {
+        List<BoulderDto> boulderDtos = boulderService.getAllBoulders();
+
+        return ResponseEntity.ok().body(boulderDtos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BoulderDto> getBoulderById(@PathVariable Long id) {
+        BoulderDto boulderDto = boulderService.getBoulderById(id);
+
+        return ResponseEntity.ok(boulderDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateBoulderById(@PathVariable Long id, @RequestBody BoulderDto boulderDto) {
+        BoulderDto boulderDTO = boulderService.updateBoulder(id, boulderDto);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .buildAndExpand(boulderDTO).toUri();
+
+        return ResponseEntity.created(uri).body(boulderDTO);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteBoulderById(@PathVariable Long id) {
+        boulderService.deleteBoulderById(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -2,25 +2,31 @@ package com.example.TopTracker.service;
 
 import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
+import com.example.TopTracker.models.Role;
 import com.example.TopTracker.models.User;
+import com.example.TopTracker.repository.RoleRepository;
 import com.example.TopTracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
 
-    public Long createUser(UserDto userDto) {
+    public UserDto createUser(UserDto userDto) {
         User u = new User();
+        UserDto userDTO = new UserDto();
 
         u.setFirstName(userDto.firstName);
         u.setLastName(userDto.lastName);
@@ -29,9 +35,29 @@ public class UserService {
         u.setUsername(userDto.username);
         u.setPassword(userDto.password);
 
-        userRepository.save(u);
+        if (userDto.role_id != null) {
+            Optional<Role> roleOptional = roleRepository.findById(String.valueOf(userDto.role_id));
 
-        return u.getId();
+            if (roleOptional.isPresent()) {
+                u.setRole(roleOptional.get());
+            }
+        }
+
+        User user = userRepository.save(u);
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setDob(user.getDob());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setPassword(user.getPassword());
+
+        if (user.getRole() != null) {
+            userDTO.setRole_id(user.getRole().getId());
+        }
+
+        userDTO.setId(user.getId());
+
+        return userDTO;
     }
 
     public List<UserDto> getAllUsers() {
@@ -48,6 +74,10 @@ public class UserService {
             userDto.email = u.getEmail();
             userDto.username = u.getUsername();
             userDto.password = u.getPassword();
+
+            if (u.getRole() != null) {
+                userDto.setRole_id(u.getRole().getId());
+            }
             users.add(userDto);
         }
 
@@ -65,6 +95,10 @@ public class UserService {
         userDto.email = u.getEmail();
         userDto.username = u.getUsername();
         userDto.password = u.getPassword();
+
+        if (u.getRole() != null) {
+            userDto.setRole_id(u.getRole().getId());
+        }
 
         return userDto;
     }

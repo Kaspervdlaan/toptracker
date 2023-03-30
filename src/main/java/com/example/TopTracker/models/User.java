@@ -3,14 +3,12 @@ package com.example.TopTracker.models;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY,
-            generator = "sequence-generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
@@ -19,11 +17,12 @@ public class User {
     private String username;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role roles;
 
 
-    public User(Long id, String firstName, String lastName, Date dob, String email, String username, String password, List<Role> roles) {
+    public User(Long id, String firstName, String lastName, Date dob, String email, String username, String password, Role roles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,19 +30,9 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
-//        this.roles = roles;
+        this.roles = roles;
     }
 
-//    public User(Long id, String firstName, String lastName, Date dob, String email, String username, String password, Role role) {
-//        this.id = id;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.dob = dob;
-//        this.email = email;
-//        this.username = username;
-//        this.password = password;
-//
-//    }
 
     public User() {
 
@@ -105,11 +94,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
+    public Role getRole() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.roles = role;
     }
 }

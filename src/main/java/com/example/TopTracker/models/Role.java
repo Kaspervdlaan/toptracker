@@ -13,7 +13,7 @@ public class Role {
 
     private String roleName;
 
-    @ManyToMany(mappedBy = "roles")
+    @OneToMany(mappedBy = "roles")
     private List<User> users;
 
     public Role() {

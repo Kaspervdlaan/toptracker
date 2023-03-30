@@ -22,11 +22,11 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<Role> createRole(@RequestBody RoleDto roleDto) {
+    public ResponseEntity<RoleDto> createRole(@RequestBody RoleDto roleDto) {
 
-        Role r = roleService.addRole(roleDto);
+        RoleDto r = roleService.createRole(roleDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .buildAndExpand(roleDto).toUri();
+                .buildAndExpand(r.getId()).toUri();
 
         return ResponseEntity.created(uri).body(r);
     }

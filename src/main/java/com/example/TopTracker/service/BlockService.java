@@ -1,6 +1,5 @@
 package com.example.TopTracker.service;
 
-import com.example.TopTracker.dto.AreaDto;
 import com.example.TopTracker.dto.BlockDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
 import com.example.TopTracker.models.Area;
@@ -82,8 +81,10 @@ public class BlockService {
         blockDto.id = b.getId();
         blockDto.blockName = b.getBlockName();
         blockDto.stoneType = b.getStoneType();
-        blockDto.area_id = b.getArea().getId();
 
+        if (b.getArea() != null) {
+            blockDto.setArea_id(b.getArea().getId());
+        }
         return blockDto;
     }
 
