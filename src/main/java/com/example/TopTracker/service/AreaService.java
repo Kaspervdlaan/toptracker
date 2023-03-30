@@ -1,6 +1,7 @@
 package com.example.TopTracker.service;
 
 import com.example.TopTracker.dto.AreaDto;
+import com.example.TopTracker.dto.BlockDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
 import com.example.TopTracker.models.Area;
 import com.example.TopTracker.models.Block;
@@ -27,7 +28,7 @@ public class AreaService {
         a.setName(areaDto.name);
         a.setAddress(areaDto.address);
         a.setDescription(areaDto.description);
-
+        
         areaRepository.save(a);
 
         return a;

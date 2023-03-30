@@ -24,15 +24,33 @@ public class BlockService {
         this.areaRepository = areaRepository;
     }
 
-    public Block createBlock(BlockDto blockDto) {
+    public BlockDto createBlock(BlockDto blockDto) {
         Block b = new Block();
+        BlockDto blockDTO = new BlockDto();
 
         b.setBlockName(blockDto.blockName);
         b.setStoneType(blockDto.stoneType);
 
-        blockRepository.save(b);
+        if (blockDto.area_id != null) {
+            Optional<Area> areaOptional = areaRepository.findById(blockDto.area_id);
 
-        return b;
+            if (areaOptional.isPresent()) {
+                b.setArea(areaOptional.get());
+            }
+        }
+
+
+        Block block =  blockRepository.save(b);
+        blockDTO.setBlockName(block.getBlockName());
+        blockDTO.setStoneType(block.getStoneType());
+
+        if (block.getArea() != null) {
+            blockDTO.setArea_id(block.getArea().getId());
+        }
+
+        blockDTO.setId(block.getId());
+
+        return blockDTO;
     }
 
 
@@ -47,6 +65,10 @@ public class BlockService {
             blockDto.blockName = b.getBlockName();
             blockDto.stoneType = b.getStoneType();
 
+            if (b.getArea() != null) {
+                blockDto.setArea_id(b.getArea().getId());
+            }
+
             blocks.add(blockDto);
         }
 
@@ -60,6 +82,7 @@ public class BlockService {
         blockDto.id = b.getId();
         blockDto.blockName = b.getBlockName();
         blockDto.stoneType = b.getStoneType();
+        blockDto.area_id = b.getArea().getId();
 
         return blockDto;
     }

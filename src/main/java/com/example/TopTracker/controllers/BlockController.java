@@ -23,10 +23,10 @@ public class BlockController {
     }
 
     @PostMapping
-    public ResponseEntity<Block> createBlock(@RequestBody BlockDto blockDto) {
-        Block b = blockService.createBlock(blockDto);
+    public ResponseEntity<BlockDto> createBlock(@RequestBody BlockDto blockDto) {
+        BlockDto b = blockService.createBlock(blockDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .buildAndExpand(blockDto).toUri();
+                .buildAndExpand(b.getId()).toUri();
 
         return ResponseEntity.created(uri).body(b);
     }

@@ -8,27 +8,17 @@ import java.util.List;
 @Table(name = "blocks")
 public class Block {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String blockName;
     private String stoneType;
 
     @ManyToOne
+    @JoinColumn(name = "area_id")
     private Area area;
 
     @OneToMany(mappedBy = "block")
     private List<Boulder> boulders;
-
-    public Block() {
-    }
-
-    public Block(Long id, String blockName, String stoneType, Area area, List<Boulder> boulders) {
-        this.id = id;
-        this.blockName = blockName;
-        this.stoneType = stoneType;
-        this.area = area;
-        this.boulders = boulders;
-    }
 
     public Long getId() {
         return id;
