@@ -60,7 +60,7 @@ public class AttemptService {
             attemptDto.notes = a.getNotes();
             attemptDto.send = a.isSend();
             attempts.add(attemptDto);
-//            attemptDto.video = a.getVideo();
+            attemptDto.video = a.getVideo();
             attemptDto.setUser_id(a.getUser_id());
 
             attempts.add(attemptDto);
