@@ -1,2 +1,0 @@
-insert into roles(id,role_id) values (1, : 'ADMIN');
-insert into users (dob, email, first_name, last_name, password, role_id, username) values (10-10-1997, admin@admin.com, Hans, de Gans, 123456, 1, Hansje);

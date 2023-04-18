@@ -11,7 +11,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private Long userId;
     private String firstName;
     private String lastName;
     private Date dob;
@@ -27,8 +27,8 @@ public class User {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private List<Attempt> attempts;
 
-    public User(Long id, String firstName, String lastName, Date dob, String email, String username, String password, Role roles, List<Attempt> attempts) {
-        this.id = id;
+    public User(Long userId, String firstName, String lastName, Date dob, String email, String username, String password, Role roles, List<Attempt> attempts) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -43,12 +43,12 @@ public class User {
 
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {

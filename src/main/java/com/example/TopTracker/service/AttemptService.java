@@ -3,7 +3,6 @@ package com.example.TopTracker.service;
 import com.example.TopTracker.dto.AttemptDto;
 
 import com.example.TopTracker.models.Attempt;
-import com.example.TopTracker.models.Block;
 import com.example.TopTracker.models.User;
 import com.example.TopTracker.repository.AttemptRepository;
 import com.example.TopTracker.repository.UserRepository;
@@ -35,7 +34,7 @@ public class AttemptService {
             Optional<User> userOptional = userRepository.findById(attemptDto.user_id);
 
             if (userOptional.isPresent()) {
-                a.setUser_id(userOptional.get().getId());
+                a.setUser_id(userOptional.get().getUserId());
             }
         }
 

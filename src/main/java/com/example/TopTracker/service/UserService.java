@@ -2,7 +2,6 @@ package com.example.TopTracker.service;
 
 import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
-import com.example.TopTracker.models.Attempt;
 import com.example.TopTracker.models.Role;
 import com.example.TopTracker.models.User;
 import com.example.TopTracker.repository.AttemptRepository;
@@ -62,7 +61,7 @@ public class UserService {
             userDTO.setRole_id(user.getRole().getId());
         }
 
-        userDTO.setId(user.getId());
+        userDTO.setId(user.getUserId());
 
         return userDTO;
     }
@@ -74,7 +73,7 @@ public class UserService {
 
         for (User u : userList) {
             UserDto userDto = new UserDto();
-            userDto.id = u.getId();
+            userDto.id = u.getUserId();
             userDto.firstName = u.getFirstName();
             userDto.lastName = u.getLastName();
             userDto.dob = u.getDob();
@@ -95,7 +94,7 @@ public class UserService {
         User u = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         UserDto userDto = new UserDto();
 
-        userDto.id = u.getId();
+        userDto.id = u.getUserId();
         userDto.firstName = u.getFirstName();
         userDto.lastName = u.getLastName();
         userDto.dob = u.getDob();
@@ -121,7 +120,7 @@ public class UserService {
         u.setPassword(userDto.getPassword());
 
         userRepository.save(u);
-        userDto.id = u.getId();
+        userDto.id = u.getUserId();
         userRepository.save(u);
         return userDto;
     }
