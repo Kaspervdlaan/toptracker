@@ -32,10 +32,6 @@ public class UserService {
         User u = new User();
         UserDto userDTO = new UserDto();
 
-        u.setFirstName(userDto.firstName);
-        u.setLastName(userDto.lastName);
-        u.setDob(userDto.dob);
-        u.setEmail(userDto.email);
         u.setUsername(userDto.username);
         u.setPassword(userDto.password);
 
@@ -43,25 +39,21 @@ public class UserService {
             Optional<Role> roleOptional = roleRepository.findById(String.valueOf(userDto.role_id));
 
             if (roleOptional.isPresent()) {
-                u.setRole(roleOptional.get());
+                u.setRoles(roleOptional.get());
             }
         }
 
 
 
         User user = userRepository.save(u);
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setDob(user.getDob());
-        userDTO.setEmail(user.getEmail());
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword(user.getPassword());
 
-        if (user.getRole() != null) {
-            userDTO.setRole_id(user.getRole().getId());
+        if (user.getRoles() != null) {
+            userDTO.setRole_id(user.getRoles().getRolename());
         }
 
-        userDTO.setId(user.getUserId());
+        userDTO.setUserId(user.getUserId());
 
         return userDTO;
     }
@@ -73,16 +65,12 @@ public class UserService {
 
         for (User u : userList) {
             UserDto userDto = new UserDto();
-            userDto.id = u.getUserId();
-            userDto.firstName = u.getFirstName();
-            userDto.lastName = u.getLastName();
-            userDto.dob = u.getDob();
-            userDto.email = u.getEmail();
+            userDto.userId = u.getUserId();
             userDto.username = u.getUsername();
             userDto.password = u.getPassword();
 
-            if (u.getRole() != null) {
-                userDto.setRole_id(u.getRole().getId());
+            if (u.getRoles() != null) {
+                userDto.setRole_id(u.getRoles().getRolename());
             }
             users.add(userDto);
         }
@@ -94,16 +82,12 @@ public class UserService {
         User u = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         UserDto userDto = new UserDto();
 
-        userDto.id = u.getUserId();
-        userDto.firstName = u.getFirstName();
-        userDto.lastName = u.getLastName();
-        userDto.dob = u.getDob();
-        userDto.email = u.getEmail();
+        userDto.userId = u.getUserId();
         userDto.username = u.getUsername();
         userDto.password = u.getPassword();
 
-        if (u.getRole() != null) {
-            userDto.setRole_id(u.getRole().getId());
+        if (u.getRoles() != null) {
+            userDto.setRole_id(u.getRoles().getRolename());
         }
 
         return userDto;
@@ -112,15 +96,11 @@ public class UserService {
     public UserDto updateUser(Long id, UserDto userDto) {
         User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        u.setFirstName(userDto.getFirstName());
-        u.setLastName(userDto.getLastName());
-        u.setEmail(userDto.getEmail());
-        u.setDob(userDto.getDob());
         u.setUsername(userDto.getUsername());
         u.setPassword(userDto.getPassword());
 
         userRepository.save(u);
-        userDto.id = u.getUserId();
+        userDto.userId = u.getUserId();
         userRepository.save(u);
         return userDto;
     }

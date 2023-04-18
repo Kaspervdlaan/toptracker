@@ -36,7 +36,7 @@ public class AreaController {
         return ResponseEntity.ok().body(areaDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{userId}")
     public ResponseEntity<AreaDto> getUserById(@PathVariable Long id) {
         AreaDto areaDto = areaService.getAreaById(id);
 
@@ -50,7 +50,7 @@ public class AreaController {
 //        return ResponseEntity.noContent().build();
 //    }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{userId}")
     public ResponseEntity<Object> updateArea(@PathVariable Long id, @RequestBody AreaDto areaDto) {
         AreaDto areaDTO = areaService.updateArea(id, areaDto);
 
@@ -60,7 +60,7 @@ public class AreaController {
         return ResponseEntity.created(uri).body(areaDTO);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{userId}")
     public ResponseEntity<Object> deleteAreaById(@PathVariable Long id) {
         areaService.deleteAreaById(id);
         return ResponseEntity.noContent().build();

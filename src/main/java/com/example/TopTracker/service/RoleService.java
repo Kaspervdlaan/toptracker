@@ -6,8 +6,6 @@ import com.example.TopTracker.repository.RoleRepository;
 import com.example.TopTracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class RoleService {
     private final RoleRepository roleRepository;
@@ -22,12 +20,12 @@ public class RoleService {
         Role r = new Role();
         RoleDto roleDTO = new RoleDto();
 
-        r.setRoleName(roleDto.roleName);
+        r.setRolename(roleDto.rolename);
 
         Role role = roleRepository.save(r);
-        roleDTO.setRoleName(role.getRoleName());
+        roleDTO.setRolename(role.getRolename());
 
-        roleDTO.setId(role.getId());
+        roleDTO.setRolename(role.getRolename());
 
         return roleDTO;
     }

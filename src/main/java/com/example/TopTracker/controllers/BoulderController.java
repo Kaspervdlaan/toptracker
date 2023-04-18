@@ -36,14 +36,14 @@ public class BoulderController {
         return ResponseEntity.ok().body(boulderDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{userId}")
     public ResponseEntity<BoulderDto> getBoulderById(@PathVariable Long id) {
         BoulderDto boulderDto = boulderService.getBoulderById(id);
 
         return ResponseEntity.ok(boulderDto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{userId}")
     public ResponseEntity<Object> updateBoulderById(@PathVariable Long id, @RequestBody BoulderDto boulderDto) {
         BoulderDto boulderDTO = boulderService.updateBoulder(id, boulderDto);
 
@@ -53,7 +53,7 @@ public class BoulderController {
         return ResponseEntity.created(uri).body(boulderDTO);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{userId}")
     public ResponseEntity<Object> deleteBoulderById(@PathVariable Long id) {
         boulderService.deleteBoulderById(id);
         return ResponseEntity.noContent().build();
