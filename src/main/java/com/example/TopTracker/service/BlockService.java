@@ -1,5 +1,6 @@
 package com.example.TopTracker.service;
 
+import com.example.TopTracker.dto.AreaDto;
 import com.example.TopTracker.dto.BlockDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
 import com.example.TopTracker.models.Area;
@@ -30,29 +31,13 @@ public class BlockService {
         b.setBlockName(blockDto.blockName);
         b.setStoneType(blockDto.stoneType);
 
-        if (blockDto.area_id != null) {
-            Optional<Area> areaOptional = areaRepository.findById(blockDto.area_id);
-
-            if (areaOptional.isPresent()) {
-                b.setArea(areaOptional.get());
-            }
-        }
-
-
         Block block =  blockRepository.save(b);
         blockDTO.setBlockName(block.getBlockName());
         blockDTO.setStoneType(block.getStoneType());
-
-        if (block.getArea() != null) {
-            blockDTO.setArea_id(block.getArea().getId());
-        }
-
         blockDTO.setId(block.getId());
 
         return blockDTO;
     }
-
-
 
     public List<BlockDto> getAllBlocks() {
         List<BlockDto> blocks = new ArrayList<>();
@@ -63,9 +48,11 @@ public class BlockService {
             blockDto.id = b.getId();
             blockDto.blockName = b.getBlockName();
             blockDto.stoneType = b.getStoneType();
-
             if (b.getArea() != null) {
                 blockDto.setArea_id(b.getArea().getId());
+            }
+            if (b.getBoulders() != null) {
+                blockDto.setBoulders(b.getBoulders());
             }
 
             blocks.add(blockDto);
@@ -87,19 +74,6 @@ public class BlockService {
         }
         return blockDto;
     }
-
-//    public void addBlockToArea(Long blockId, Long areaId) {
-//        Optional<Area> optionalArea = areaRepository.findById(areaId);
-//        Optional<Block> optionalBlock = blockRepository.findById(blockId);
-//
-//        if (!optionalBlock.isEmpty() && !optionalArea.isEmpty()) {
-//            Area a = optionalArea.get();
-//            Block b = optionalBlock.get();
-//
-//            b.setArea(a);
-//            blockRepository.save(b);
-//        }
-//    }
 
     public BlockDto updateBlock(Long id , BlockDto blockDto){
         Block b = blockRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Block not found"));

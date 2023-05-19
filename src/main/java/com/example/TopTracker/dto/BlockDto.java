@@ -1,23 +1,16 @@
 package com.example.TopTracker.dto;
 
+import com.example.TopTracker.models.Boulder;
+
+import java.util.List;
 
 public class BlockDto {
     public Long id;
     public String blockName;
     public String stoneType;
 
+    public List<Boulder> boulders;
     public Long area_id;
-
-    public BlockDto() {
-
-    }
-
-    public BlockDto(Long id, String blockName, String stoneType, Long area_id) {
-        this.id = id;
-        this.blockName = blockName;
-        this.stoneType = stoneType;
-        this.area_id = area_id;
-    }
 
     public Long getId() {
         return id;
@@ -43,6 +36,14 @@ public class BlockDto {
         this.stoneType = stoneType;
     }
 
+    public List<Boulder> getBoulders() {
+        return boulders;
+    }
+
+    public void setBoulders(List<Boulder> boulders) {
+        this.boulders = boulders;
+    }
+
     public Long getArea_id() {
         return area_id;
     }
@@ -50,4 +51,5 @@ public class BlockDto {
     public void setArea_id(Long area_id) {
         this.area_id = area_id;
     }
+
 }

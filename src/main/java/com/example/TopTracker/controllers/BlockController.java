@@ -1,7 +1,10 @@
 package com.example.TopTracker.controllers;
 
+import com.example.TopTracker.dto.AreaDto;
 import com.example.TopTracker.dto.BlockDto;
+import com.example.TopTracker.dto.BoulderDto;
 import com.example.TopTracker.service.AreaService;
+import com.example.TopTracker.service.BlockBouldersService;
 import com.example.TopTracker.service.BlockService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +17,12 @@ import java.util.List;
 @RequestMapping("blocks")
 public class BlockController {
     private final BlockService blockService;
-    private final AreaService areaService;
+    private final BlockBouldersService blockBouldersService;
 
-    public BlockController(BlockService blockService, AreaService areaService) {
+
+    public BlockController(BlockService blockService, BlockBouldersService blockBouldersService, AreaService areaService) {
         this.blockService = blockService;
-        this.areaService = areaService;
+        this.blockBouldersService = blockBouldersService;
     }
 
     @PostMapping
@@ -37,22 +41,27 @@ public class BlockController {
         return ResponseEntity.ok().body(blockDtos);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{blockId}")
     public ResponseEntity<BlockDto> getBlockById(@PathVariable Long id) {
         BlockDto blockDto = blockService.getBlockById(id);
 
         return ResponseEntity.ok(blockDto);
     }
 
-//    @PostMapping("/{block_id}/areas/{area_id}")
-//    public ResponseEntity<Object> addBlockToArea(@PathVariable("area_id") Long area_id, @PathVariable("block_id") Long block_id) {
-//        blockService.addBlockToArea(area_id, block_id);
-//
-//        return ResponseEntity.noContent().build();
-//    }
+    @GetMapping("/{block_id}/boulders")
+    public ResponseEntity<List<BoulderDto>> getAreaBlocks(@PathVariable Long block_id) {
+        List<BoulderDto> boulderDtos = blockBouldersService.getBlockBoulders(block_id);
+        return ResponseEntity.ok(boulderDtos);
+    }
 
+    @PutMapping("/{block_id}/boulders/{boulder_id}")
+    public ResponseEntity<Object> addBoulderToBlock(@PathVariable("block_id") Long block_id, @PathVariable("boulder_id") Long boulder_id) {
+        BlockDto blockDto = blockBouldersService.addBoulderToBlock(block_id, boulder_id);
 
-    @PutMapping("/{userId}")
+        return ResponseEntity.ok(blockDto);
+    }
+
+    @PutMapping("/{blockId}")
     public ResponseEntity<Object> updateBlockById(@PathVariable Long id, @RequestBody BlockDto blockDto) {
         BlockDto blockDTO = blockService.updateBlock(id, blockDto);
 
@@ -62,7 +71,7 @@ public class BlockController {
         return ResponseEntity.created(uri).body(blockDTO);
     }
 
-    @DeleteMapping("{userId}")
+    @DeleteMapping("{blockId}")
     public ResponseEntity<Object> deleteBlockById(@PathVariable Long id) {
         blockService.deleteBlockById(id);
         return ResponseEntity.noContent().build();

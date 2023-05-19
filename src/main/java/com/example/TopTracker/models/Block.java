@@ -1,5 +1,6 @@
 package com.example.TopTracker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class Block {
 
     @ManyToOne
     @JoinColumn(name = "area_id")
+    @JsonIgnore
     private Area area;
 
     @OneToMany(mappedBy = "block")

@@ -11,20 +11,6 @@ public class BoulderDto {
 
     public Long block_id;
 
-    public BoulderDto() {
-
-    }
-
-    public BoulderDto(Long id, String boulderName, String boulderGrade, String holdType, String boulderNotes, String boulderImage, Long block_id) {
-        this.id = id;
-        this.boulderName = boulderName;
-        this.boulderGrade = boulderGrade;
-        this.holdType = holdType;
-        this.boulderNotes = boulderNotes;
-        this.boulderImage = boulderImage;
-        this.block_id = block_id;
-    }
-
     public Long getId() {
         return id;
     }

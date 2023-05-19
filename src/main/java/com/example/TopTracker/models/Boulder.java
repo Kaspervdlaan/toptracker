@@ -1,5 +1,6 @@
 package com.example.TopTracker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,20 +18,8 @@ public class Boulder {
 
     @ManyToOne
     @JoinColumn(name = "block_id")
+    @JsonIgnore
     private Block block;
-
-    public Boulder() {
-    }
-
-    public Boulder(Long id, String boulderName, String boulderGrade, String holdType, String boulderNotes, String boulderImage, Block block) {
-        this.id = id;
-        this.boulderName = boulderName;
-        this.boulderGrade = boulderGrade;
-        this.holdType = holdType;
-        this.boulderNotes = boulderNotes;
-        this.boulderImage = boulderImage;
-        this.block = block;
-    }
 
     public Long getId() {
         return id;

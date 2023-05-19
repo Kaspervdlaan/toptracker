@@ -36,7 +36,7 @@ public class BoulderController {
         return ResponseEntity.ok().body(boulderDtos);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{boulderId}")
     public ResponseEntity<BoulderDto> getBoulderById(@PathVariable Long id) {
         BoulderDto boulderDto = boulderService.getBoulderById(id);
 

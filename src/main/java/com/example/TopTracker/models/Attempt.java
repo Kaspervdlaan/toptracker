@@ -17,18 +17,6 @@ public class Attempt {
     @ManyToOne
     private Attempt attempts;
 
-    public Attempt() {
-    }
-
-    public Attempt(Long id, boolean send, String notes, String video, Long user_id, Attempt attempts) {
-        this.id = id;
-        this.send = send;
-        this.notes = notes;
-        this.video = video;
-        this.user_id = user_id;
-        this.attempts = attempts;
-    }
-
     public Long getId() {
         return id;
     }
