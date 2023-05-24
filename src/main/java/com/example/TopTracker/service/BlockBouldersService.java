@@ -45,16 +45,9 @@ public class BlockBouldersService {
         Block block = blockRepository.findById(blockId).orElseThrow(() -> new RuntimeException("Not found"));
         Boulder boulder = boulderRepository.findById(boulderId).orElseThrow(() -> new RuntimeException("Not found"));
 
-        if (block.getBoulders() == null) {
-            List<Boulder> boulders =  new ArrayList<>();
-            boulders.add(boulder);
-            block.setBoulders(boulders);
-        } else {
-            List<Boulder> boulders = block.getBoulders();
-            boulders.add(boulder);
-            block.setBoulders(boulders);
-        }
-
+        List<Boulder> boulders = block.getBoulders();
+        boulders.add(boulder);
+        block.setBoulders(boulders);
 
         Block b = blockRepository.save(block);
 

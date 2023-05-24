@@ -43,7 +43,7 @@ public class BoulderController {
         return ResponseEntity.ok(boulderDto);
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/{boulderId}/")
     public ResponseEntity<Object> updateBoulderById(@PathVariable Long id, @RequestBody BoulderDto boulderDto) {
         BoulderDto boulderDTO = boulderService.updateBoulder(id, boulderDto);
 

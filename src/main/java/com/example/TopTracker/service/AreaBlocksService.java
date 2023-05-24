@@ -4,6 +4,7 @@ import com.example.TopTracker.dto.AreaDto;
 import com.example.TopTracker.dto.BlockDto;
 import com.example.TopTracker.models.Area;
 import com.example.TopTracker.models.Block;
+import com.example.TopTracker.models.Boulder;
 import com.example.TopTracker.repository.AreaRepository;
 import com.example.TopTracker.repository.BlockRepository;
 import org.springframework.stereotype.Service;

@@ -72,6 +72,9 @@ public class BoulderService {
             if (b.getBlock() != null) {
                 boulderDto.setBlock_id(b.getBlock().getId());
             }
+            if (b.getAttempts() != null) {
+                boulderDto.setAttempts(b.getAttempts());
+            }
 
             boulders.add(boulderDto);
         }

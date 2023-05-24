@@ -10,16 +10,7 @@ public class AttemptDto {
 
     public Long user_id;
 
-    public AttemptDto() {
-    }
-
-    public AttemptDto(Long id, boolean send, String notes, String video, Long user_id) {
-        this.id = id;
-        this.send = send;
-        this.notes = notes;
-        this.video = video;
-        this.user_id = user_id;
-    }
+    public Long boulder_id;
 
     public Long getId() {
         return id;
@@ -60,4 +51,14 @@ public class AttemptDto {
     public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
+
+    public Long getBoulder_id() {
+        return boulder_id;
+    }
+
+    public void setBoulder_id(Long boulder_id) {
+        this.boulder_id = boulder_id;
+    }
+
+
 }

@@ -1,5 +1,9 @@
 package com.example.TopTracker.dto;
 
+import com.example.TopTracker.models.Attempt;
+
+import java.util.List;
+
 public class BoulderDto {
     public Long id;
     public String boulderName;
@@ -10,6 +14,8 @@ public class BoulderDto {
     public String boulderImage; // needs updating to MultipartFile
 
     public Long block_id;
+
+    public List<Attempt> attempts;
 
     public Long getId() {
         return id;
@@ -65,5 +71,13 @@ public class BoulderDto {
 
     public void setBlock_id(Long block_id) {
         this.block_id = block_id;
+    }
+
+    public List<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(List<Attempt> attempts) {
+        this.attempts = attempts;
     }
 }

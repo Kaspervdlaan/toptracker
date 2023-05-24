@@ -1,5 +1,6 @@
 package com.example.TopTracker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -13,9 +14,15 @@ public class Attempt {
     private String notes;
     private String video; // This needs to be updated to MultipartFile
 
-    private Long user_id;
     @ManyToOne
-    private Attempt attempts;
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "boulder_id")
+    @JsonIgnore
+    private Boulder boulder;
 
     public Long getId() {
         return id;
@@ -49,19 +56,20 @@ public class Attempt {
         this.video = video;
     }
 
-    public Long getUser_id() {
-        return user_id;
+
+    public Boulder getBoulder() {
+        return boulder;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setBoulder(Boulder boulder) {
+        this.boulder = boulder;
     }
 
-    public Attempt getAttempts() {
-        return attempts;
+    public User getUser() {
+        return user;
     }
 
-    public void setAttempts(Attempt attempt) {
-        this.attempts = attempt;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

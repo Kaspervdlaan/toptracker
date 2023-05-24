@@ -18,7 +18,7 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role roles;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Attempt> attempts;
 
     public Long getUserId() {
@@ -60,4 +60,6 @@ public class User {
     public void setAttempts(List<Attempt> attempts) {
         this.attempts = attempts;
     }
+
+
 }

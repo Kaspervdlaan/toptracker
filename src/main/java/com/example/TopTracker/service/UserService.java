@@ -43,14 +43,16 @@ public class UserService {
             }
         }
 
-
-
         User user = userRepository.save(u);
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword(user.getPassword());
 
         if (user.getRoles() != null) {
             userDTO.setRole_id(user.getRoles().getRolename());
+        }
+
+        if (user.getAttempts() != null) {
+            userDTO.setUserId(user.getUserId());
         }
 
         userDTO.setUserId(user.getUserId());
@@ -71,6 +73,10 @@ public class UserService {
 
             if (u.getRoles() != null) {
                 userDto.setRole_id(u.getRoles().getRolename());
+            }
+
+            if (u.getAttempts() != null) {
+                userDto.setAttempts(u.getAttempts());
             }
             users.add(userDto);
         }

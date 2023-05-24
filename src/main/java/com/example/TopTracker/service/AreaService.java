@@ -57,7 +57,6 @@ public class AreaService {
             if (a.getBlocks() != null) {
                 areaDto.setBlocks(a.getBlocks());
             }
-
             areas.add(areaDto);
         }
 

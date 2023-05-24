@@ -26,15 +26,21 @@ public class BlockService {
 
     public BlockDto createBlock(BlockDto blockDto) {
         Block b = new Block();
+
         BlockDto blockDTO = new BlockDto();
 
         b.setBlockName(blockDto.blockName);
         b.setStoneType(blockDto.stoneType);
 
+        Area area = areaRepository.findById(blockDto.area_id).orElseThrow(() -> new RuntimeException("Not found"));
+        b.setArea(area);
+
+
         Block block =  blockRepository.save(b);
         blockDTO.setBlockName(block.getBlockName());
         blockDTO.setStoneType(block.getStoneType());
         blockDTO.setId(block.getId());
+        blockDTO.setArea_id(blockDto.area_id);
 
         return blockDTO;
     }
