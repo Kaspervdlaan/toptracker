@@ -37,6 +37,11 @@ public class AreaBlocksService {
                 blockDto.setBlockName(block.getBlockName());
                 blockDto.setStoneType(block.getStoneType());
                 blockDto.setArea_id(block.getArea().getId());
+
+                if (blockDto.boulders != null) {
+                    blockDto.boulders = block.getBoulders();
+                }
+
                 blockDtos.add(blockDto);
             }
             return blockDtos;

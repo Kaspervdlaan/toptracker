@@ -1,9 +1,11 @@
 package com.example.TopTracker.service;
 
 import com.example.TopTracker.dto.BoulderDto;
+import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
 import com.example.TopTracker.models.Block;
 import com.example.TopTracker.models.Boulder;
+import com.example.TopTracker.models.User;
 import com.example.TopTracker.repository.BlockRepository;
 import com.example.TopTracker.repository.BoulderRepository;
 import org.springframework.stereotype.Service;
@@ -98,6 +100,7 @@ public class BoulderService {
         }
         return boulderDto;
     }
+
 
     public BoulderDto updateBoulder(Long id, BoulderDto boulderDto) {
         Boulder b = boulderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Boulder not found"));

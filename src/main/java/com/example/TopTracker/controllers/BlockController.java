@@ -62,7 +62,7 @@ public class BlockController {
     }
 
     @PutMapping("/{blockId}")
-    public ResponseEntity<Object> updateBlockById(@PathVariable Long id, @RequestBody BlockDto blockDto) {
+    public ResponseEntity<Object> updateBlockById(@PathVariable("blockId") Long id, @RequestBody BlockDto blockDto) {
         BlockDto blockDTO = blockService.updateBlock(id, blockDto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -71,8 +71,8 @@ public class BlockController {
         return ResponseEntity.created(uri).body(blockDTO);
     }
 
-    @DeleteMapping("{blockId}")
-    public ResponseEntity<Object> deleteBlockById(@PathVariable Long id) {
+    @DeleteMapping("/{blockId}")
+    public ResponseEntity<Object> deleteBlockById(@PathVariable("blockId") Long id) {
         blockService.deleteBlockById(id);
         return ResponseEntity.noContent().build();
     }

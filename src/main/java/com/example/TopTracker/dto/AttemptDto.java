@@ -1,7 +1,5 @@
 package com.example.TopTracker.dto;
 
-import com.example.TopTracker.models.User;
-
 public class AttemptDto {
     public Long id;
     public boolean send;
@@ -11,6 +9,8 @@ public class AttemptDto {
     public Long user_id;
 
     public Long boulder_id;
+
+    public Long logbook_id;
 
     public Long getId() {
         return id;
@@ -60,5 +60,11 @@ public class AttemptDto {
         this.boulder_id = boulder_id;
     }
 
+    public Long getLogbook_id() {
+        return logbook_id;
+    }
 
+    public void setLogbook_id(Long logbook_id) {
+        this.logbook_id = logbook_id;
+    }
 }

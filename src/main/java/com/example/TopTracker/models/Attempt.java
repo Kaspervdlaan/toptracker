@@ -20,6 +20,11 @@ public class Attempt {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "logbook_id")
+    @JsonIgnore
+    private Logbook logbook;
+
+    @ManyToOne
     @JoinColumn(name = "boulder_id")
     @JsonIgnore
     private Boulder boulder;
@@ -71,5 +76,13 @@ public class Attempt {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Logbook getLogbook() {
+        return logbook;
+    }
+
+    public void setLogbook(Logbook logbook) {
+        this.logbook = logbook;
     }
 }

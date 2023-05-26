@@ -1,6 +1,7 @@
 package com.example.TopTracker.dto;
 
 import com.example.TopTracker.models.Attempt;
+import com.example.TopTracker.models.Logbook;
 
 import java.util.List;
 
@@ -12,6 +13,9 @@ public class UserDto {
     public String role_id;
 
     public List<Attempt> attempts;
+
+    public Long logbook_id;
+
 
     public Long getUserId() {
         return userId;
@@ -51,5 +55,13 @@ public class UserDto {
 
     public void setAttempts(List<Attempt> attempts) {
         this.attempts = attempts;
+    }
+
+    public Long getLogbook_id() {
+        return logbook_id;
+    }
+
+    public void setLogbook_id(Long logbook_id) {
+        this.logbook_id = logbook_id;
     }
 }

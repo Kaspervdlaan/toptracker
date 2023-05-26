@@ -43,28 +43,28 @@ public class AreaController {
         return ResponseEntity.ok().body(areaDtos);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<AreaDto> getUserById(@PathVariable Long id) {
+    @GetMapping("/{area_id}")
+    public ResponseEntity<AreaDto> getUserById(@PathVariable("area_id") Long id) {
         AreaDto areaDto = areaService.getAreaById(id);
 
         return ResponseEntity.ok(areaDto);
     }
 
     @PutMapping("/{area_id}/blocks/{block_id}")
-    public ResponseEntity<Object> addBlockToArea(@PathVariable Long area_id, @PathVariable Long block_id) {
+    public ResponseEntity<Object> addBlockToArea(@PathVariable("area_id") Long area_id, @PathVariable("block_id") Long block_id) {
         AreaDto areaDto = areaBlocksService.addBlockToArea(area_id, block_id);
 
         return ResponseEntity.ok(areaDto);
     }
 
     @GetMapping("/{area_id}/blocks")
-    public ResponseEntity<List<BlockDto>> getAreaBlocks(@PathVariable Long area_id) {
+    public ResponseEntity<List<BlockDto>> getAreaBlocks(@PathVariable("area_id") Long area_id) {
         List<BlockDto> blockDtos = areaBlocksService.getAreaBlocks(area_id);
         return ResponseEntity.ok(blockDtos);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Object> updateArea(@PathVariable Long id, @RequestBody AreaDto areaDto) {
+    @PutMapping("/{area_id}")
+    public ResponseEntity<Object> updateArea(@PathVariable("area_id") Long id, @RequestBody AreaDto areaDto) {
         AreaDto areaDTO = areaService.updateArea(id, areaDto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -73,8 +73,8 @@ public class AreaController {
         return ResponseEntity.created(uri).body(areaDTO);
     }
 
-    @DeleteMapping("{userId}")
-    public ResponseEntity<Object> deleteAreaById(@PathVariable Long id) {
+    @DeleteMapping("/{area_id}")
+    public ResponseEntity<Object> deleteAreaById(@PathVariable("area_id") Long id) {
         areaService.deleteAreaById(id);
         return ResponseEntity.noContent().build();
     }

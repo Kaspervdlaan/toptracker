@@ -93,7 +93,6 @@ public class BlockService {
     }
 
     public void deleteBlockById(Long id) {
-        Block b = blockRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Block not found"));
-        blockRepository.delete(b);
+        blockRepository.deleteById(id);
     }
 }

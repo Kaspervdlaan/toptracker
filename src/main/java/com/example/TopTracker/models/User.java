@@ -18,6 +18,9 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role roles;
 
+    @OneToOne(mappedBy = "user")
+    private Logbook logbook;
+
     @OneToMany(mappedBy = "user")
     private List<Attempt> attempts;
 
@@ -61,5 +64,11 @@ public class User {
         this.attempts = attempts;
     }
 
+    public Logbook getLogbook() {
+        return logbook;
+    }
 
+    public void setLogbook(Logbook logbook) {
+        this.logbook = logbook;
+    }
 }

@@ -36,7 +36,7 @@ public class UserService {
         u.setPassword(userDto.password);
 
         if (userDto.role_id != null) {
-            Optional<Role> roleOptional = roleRepository.findById(String.valueOf(userDto.role_id));
+            Optional<Role> roleOptional = roleRepository.findById(userDto.role_id);
 
             if (roleOptional.isPresent()) {
                 u.setRoles(roleOptional.get());
@@ -78,6 +78,10 @@ public class UserService {
             if (u.getAttempts() != null) {
                 userDto.setAttempts(u.getAttempts());
             }
+
+            if (u.getLogbook() != null) {
+                userDto.setLogbook_id(u.getLogbook().getId());
+            }
             users.add(userDto);
         }
 
@@ -96,6 +100,14 @@ public class UserService {
             userDto.setRole_id(u.getRoles().getRolename());
         }
 
+        if (u.getAttempts() != null) {
+            userDto.setAttempts(u.getAttempts());
+        }
+
+        if (u.getLogbook() != null) {
+            userDto.setLogbook_id(u.getLogbook().getId());
+        }
+
         return userDto;
     }
 
@@ -112,7 +124,6 @@ public class UserService {
     }
 
     public void deleteUserById(Long id) {
-        User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        userRepository.delete(u);
+        userRepository.deleteById(id);
     }
 }

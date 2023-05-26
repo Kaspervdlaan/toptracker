@@ -72,6 +72,10 @@ public class AreaService {
         areaDto.address = a.getAddress();
         areaDto.description = a.getDescription();
 
+        if (a.getBlocks() != null) {
+            areaDto.blocks = a.getBlocks();
+        }
+
         return areaDto;
     }
 
@@ -135,7 +139,6 @@ public class AreaService {
     }
 
     public void deleteAreaById(Long id) {
-        Area a = areaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        areaRepository.delete(a);
+        areaRepository.deleteById(id);
     }
 }
