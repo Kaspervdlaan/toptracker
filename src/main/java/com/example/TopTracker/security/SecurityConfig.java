@@ -27,15 +27,15 @@ public class SecurityConfig {
         InMemoryUserDetailsManager man = new InMemoryUserDetailsManager();
 
         UserDetails userDetails1 = User
-                .withUsername("Hansje")
-                .password(encoder.encode("appel"))
+                .withUsername("Kasper")
+                .password(encoder.encode("123456"))
                 .roles("USER")
                 .build();
         man.createUser(userDetails1);
 
         UserDetails userDetails2 = User
-                .withUsername("Henk")
-                .password(encoder.encode("peer"))
+                .withUsername("Admin")
+                .password(encoder.encode("password"))
                 .roles("ADMIN")  // ,"USER"
                 .build();
         man.createUser(userDetails2);
