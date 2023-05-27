@@ -1,5 +1,6 @@
 package com.example.TopTracker.controllers;
 
+import com.example.TopTracker.dto.UserCredentialsDto;
 import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.models.User;
 import com.example.TopTracker.service.UserService;
@@ -54,6 +55,11 @@ public class UserController {
         UserDto userDto = userService.getUserById(id);
 
         return ResponseEntity.ok().body(userDto);
+    }
+
+    @GetMapping("/credentials")
+    public List<UserCredentialsDto> getAllUserCredentials() {
+        return userService.getAllUserCredentials();
     }
 
     @PutMapping("/{userId}")

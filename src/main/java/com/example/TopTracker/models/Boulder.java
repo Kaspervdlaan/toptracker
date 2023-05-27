@@ -18,10 +18,10 @@ public class Boulder {
 
     private String boulderImage;
 
-    @OneToMany(mappedBy = "boulder")
+    @OneToMany(mappedBy = "boulder", cascade = CascadeType.ALL)
     private List<Attempt> attempts;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "block_id")
     @JsonIgnore
     private Block block;

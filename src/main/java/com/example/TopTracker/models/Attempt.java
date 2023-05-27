@@ -14,17 +14,17 @@ public class Attempt {
     private String notes;
     private String video; // This needs to be updated to MultipartFile
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "logbook_id")
     @JsonIgnore
     private Logbook logbook;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "boulder_id")
     @JsonIgnore
     private Boulder boulder;

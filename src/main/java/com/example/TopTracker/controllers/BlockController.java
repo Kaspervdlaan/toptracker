@@ -41,8 +41,8 @@ public class BlockController {
         return ResponseEntity.ok().body(blockDtos);
     }
 
-    @GetMapping("/{blockId}")
-    public ResponseEntity<BlockDto> getBlockById(@PathVariable Long id) {
+    @GetMapping("/{block_id}")
+    public ResponseEntity<BlockDto> getBlockById(@PathVariable("block_id") Long id) {
         BlockDto blockDto = blockService.getBlockById(id);
 
         return ResponseEntity.ok(blockDto);

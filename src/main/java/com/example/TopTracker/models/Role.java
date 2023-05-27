@@ -8,7 +8,7 @@ public class Role {
     @Id
     private String rolename;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
     private Collection<User> users;
 
     public Role(String rolename, Collection<User> users) {

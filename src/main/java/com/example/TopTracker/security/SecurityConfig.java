@@ -13,7 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -87,7 +86,7 @@ public class SecurityConfig  {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                 .requestMatchers(HttpMethod.POST, "/users").permitAll()
-                .requestMatchers(HttpMethod.GET).hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/users/credentials").hasAuthority("ADMIN")
                 .requestMatchers("/areas").hasAnyAuthority("ADMIN", "USER")
                 .requestMatchers("/blocks").hasAnyAuthority("ADMIN", "USER")
                 .requestMatchers("/boulders").hasAnyAuthority("ADMIN", "USER")

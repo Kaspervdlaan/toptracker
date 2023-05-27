@@ -1,5 +1,6 @@
 package com.example.TopTracker.service;
 
+import com.example.TopTracker.dto.UserCredentialsDto;
 import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
 import com.example.TopTracker.models.Role;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -117,6 +119,16 @@ public class UserService {
         }
 
         return userDto;
+    }
+
+    public List<UserCredentialsDto> getAllUserCredentials(){
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+
+        return users.stream()
+                .map(user -> new UserCredentialsDto(user.getUserId(), user.getUsername(), user.getRoles().stream().map(Role::getRolename).collect(Collectors.toList())))
+                .collect(Collectors.toList());
+
     }
 
     public UserDto updateUser(Long id, UserDto userDto) {

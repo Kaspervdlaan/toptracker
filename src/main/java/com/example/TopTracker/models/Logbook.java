@@ -11,11 +11,11 @@ public class Logbook {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "logbook")
+    @OneToMany(mappedBy = "logbook", cascade = CascadeType.ALL)
     private List<Attempt> attempts;
 
     public Long getId() {
