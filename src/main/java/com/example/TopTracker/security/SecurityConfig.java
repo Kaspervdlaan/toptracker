@@ -86,6 +86,7 @@ public class SecurityConfig  {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                 .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                .requestMatchers(HttpMethod.POST, "/upload").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users/credentials").hasAuthority("ADMIN")
                 .requestMatchers("/areas").hasAnyAuthority("ADMIN", "USER")
                 .requestMatchers("/blocks").hasAnyAuthority("ADMIN", "USER")
