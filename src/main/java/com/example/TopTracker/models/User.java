@@ -1,8 +1,9 @@
 package com.example.TopTracker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -14,11 +15,11 @@ public class User {
     private String username;
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Collection<Role> roles;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Logbook logbook;
 
     @OneToMany(mappedBy = "user")
@@ -48,14 +49,6 @@ public class User {
         this.password = password;
     }
 
-    public Role getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Role roles) {
-        this.roles = roles;
-    }
-
     public List<Attempt> getAttempts() {
         return attempts;
     }
@@ -70,5 +63,13 @@ public class User {
 
     public void setLogbook(Logbook logbook) {
         this.logbook = logbook;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 }

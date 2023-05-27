@@ -29,7 +29,7 @@ public class UserController {
 
         UserDto u = userService.createUser(userDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .buildAndExpand(u.getRole_id()).toUri();
+                .buildAndExpand(userDto).toUri();
 
         return ResponseEntity.created(uri).body(u);
     }
