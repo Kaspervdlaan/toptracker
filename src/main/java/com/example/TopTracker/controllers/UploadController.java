@@ -1,13 +1,13 @@
 package com.example.TopTracker.controllers;
 
 
-import com.example.TopTracker.dto.FileUploadResponse;
+import com.example.TopTracker.dto.FileDto;
 import com.example.TopTracker.models.FileDocument;
 import com.example.TopTracker.service.UploadService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,13 +24,22 @@ public class UploadController {
     }
 
     @PostMapping("/upload")
-    public FileUploadResponse singleFileUpload(@RequestParam("file")MultipartFile file) throws IOException {
+    public ResponseEntity<FileDto> singleFileUpload(@RequestParam("file")MultipartFile file) throws IOException {
 
         FileDocument fileDocument = uploadService.uploadFile(file);
-        String url = String.valueOf(ServletUriComponentsBuilder.fromCurrentContextPath().path("/download").path(Objects.requireNonNull(file.getOriginalFilename())));
+        FileDto fileDto = uploadService.convertToDto(fileDocument);
+        return new ResponseEntity<>(fileDto, HttpStatus.CREATED);
 
-        String contentType = file.getContentType();
 
-        return new FileUploadResponse(fileDocument.getFileName(), url, contentType);
+//        FileDto fileDto = uploadService.uploadFile(file);
+//
+//        String contentType = file.getContentType();
+//
+//        return new FileDto(fileDto.getFileName(), contentType, url);
     }
+
+//    @GetMapping("/download/{filename}")
+//    ResponseEntity<byte[]> singleFileDownload(@PathVariable String fileName, HttpServletRequest request) {
+//        return uploadService.downloadFile(fileName, request);
+//    }
 }
