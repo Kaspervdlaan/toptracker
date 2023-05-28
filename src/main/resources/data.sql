@@ -1,7 +1,7 @@
 insert into roles (rolename) values ('USER'), ('ADMIN');
 
-insert into users (user_id, username, password) values (100, 'Admin', '123456');
-insert into users_roles(users_user_id, roles_rolename) values (100, 'ADMIN');
+insert into users (user_id, username, password) values (1, 'Admin', '$2a$10$yyHn1Kwoog7tFlBmN.k7yeWQ8p3AU0DwdxtBkbhXhyK2Z/OF./gRu'), (2, 'User', '$2a$10$yyHn1Kwoog7tFlBmN.k7yeWQ8p3AU0DwdxtBkbhXhyK2Z/OF./gRu');
+insert into users_roles(users_user_id, roles_rolename) values (1, 'ADMIN'),(1, 'USER'), (2, 'USER');
 ----
 --insert into areas (id, name, address, description) values (100, 'Avalonia', 'Duitsland', 'Dug by Daniel the caveman');
 ----insert into blocks (id, block_name, stone_type, area_id) values (100, 'Cave', 'Granite', 100), (101, 'Slab', 'Granite', 100),(102, 'Slope', 'Balast', 100);
