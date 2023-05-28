@@ -1,5 +1,6 @@
 package com.example.TopTracker.controllers;
 
+import com.example.TopTracker.dto.UserCredentialsDto;
 import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.models.User;
 import com.example.TopTracker.service.UserService;
@@ -29,7 +30,7 @@ public class UserController {
 
         UserDto u = userService.createUser(userDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .buildAndExpand(u.getRole_id()).toUri();
+                .buildAndExpand(userDto).toUri();
 
         return ResponseEntity.created(uri).body(u);
     }
@@ -50,14 +51,19 @@ public class UserController {
 
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") Long id) {
         UserDto userDto = userService.getUserById(id);
 
-        return ResponseEntity.ok(userDto);
+        return ResponseEntity.ok().body(userDto);
+    }
+
+    @GetMapping("/credentials")
+    public List<UserCredentialsDto> getAllUserCredentials() {
+        return userService.getAllUserCredentials();
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+    public ResponseEntity<Object> updateUser(@PathVariable("userId") Long id, @RequestBody UserDto userDto) {
         UserDto userDTO = userService.updateUser(id, userDto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -65,8 +71,8 @@ public class UserController {
 
         return ResponseEntity.created(uri).body(userDTO);
     }
-    @DeleteMapping("{userId}")
-    public ResponseEntity<Object> deleteUserById(@PathVariable Long id) {
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Object> deleteUserById(@PathVariable("userId") Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }

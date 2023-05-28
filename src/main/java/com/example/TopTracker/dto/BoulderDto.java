@@ -1,5 +1,9 @@
 package com.example.TopTracker.dto;
 
+import com.example.TopTracker.models.Attempt;
+
+import java.util.List;
+
 public class BoulderDto {
     public Long id;
     public String boulderName;
@@ -11,19 +15,7 @@ public class BoulderDto {
 
     public Long block_id;
 
-    public BoulderDto() {
-
-    }
-
-    public BoulderDto(Long id, String boulderName, String boulderGrade, String holdType, String boulderNotes, String boulderImage, Long block_id) {
-        this.id = id;
-        this.boulderName = boulderName;
-        this.boulderGrade = boulderGrade;
-        this.holdType = holdType;
-        this.boulderNotes = boulderNotes;
-        this.boulderImage = boulderImage;
-        this.block_id = block_id;
-    }
+    public List<Attempt> attempts;
 
     public Long getId() {
         return id;
@@ -79,5 +71,13 @@ public class BoulderDto {
 
     public void setBlock_id(Long block_id) {
         this.block_id = block_id;
+    }
+
+    public List<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(List<Attempt> attempts) {
+        this.attempts = attempts;
     }
 }

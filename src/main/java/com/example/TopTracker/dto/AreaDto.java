@@ -10,18 +10,7 @@ public class AreaDto {
     public String address;
     public String description;
 
-
-    public List<Long> blocks;
-
-    public AreaDto() {  }
-
-    public AreaDto(Long id, String name, String address, String description, List<Long> blocks) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.description = description;
-        this.blocks = blocks;
-    }
+    public List<Block> blocks;
 
     public Long getId() {
         return id;
@@ -55,11 +44,11 @@ public class AreaDto {
         this.description = description;
     }
 
-    public List<Long> getBlocks() {
+    public List<Block> getBlocks() {
         return blocks;
     }
 
-    public void setBlocks(List<Long> blocks) {
+    public void setBlocks(List<Block> blocks) {
         this.blocks = blocks;
     }
 }

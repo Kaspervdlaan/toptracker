@@ -1,5 +1,6 @@
 package com.example.TopTracker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,11 +14,12 @@ public class Block {
     private String blockName;
     private String stoneType;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "area_id")
+    @JsonIgnore
     private Area area;
 
-    @OneToMany(mappedBy = "block")
+    @OneToMany(mappedBy = "block", cascade = CascadeType.ALL)
     private List<Boulder> boulders;
 
     public Long getId() {

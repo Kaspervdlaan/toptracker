@@ -1,31 +1,24 @@
 package com.example.TopTracker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "areas")
+@JsonIgnoreProperties("blocks")
 public class Area {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     private String name;
     private String address;
     private String description;
 
-    @OneToMany(mappedBy = "area")
+    @OneToMany(mappedBy = "area", cascade = CascadeType.ALL)
     private List<Block> blocks;
-
-    public Area() {}
-
-    public Area(Long id, String name, String address, String description, List<Block> blocks) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.description = description;
-        this.blocks = blocks;
-    }
 
     public Long getId() {
         return id;

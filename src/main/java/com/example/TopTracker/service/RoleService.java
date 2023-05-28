@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleService {
     private final RoleRepository roleRepository;
-    private final UserRepository userRepository;
 
-    public RoleService(RoleRepository roleRepository, UserRepository userRepository) {
+    public RoleService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
+
     }
 
     public RoleDto createRole(RoleDto roleDto) {
@@ -25,7 +24,6 @@ public class RoleService {
         Role role = roleRepository.save(r);
         roleDTO.setRolename(role.getRolename());
 
-        roleDTO.setRolename(role.getRolename());
 
         return roleDTO;
     }

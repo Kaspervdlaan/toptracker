@@ -1,5 +1,6 @@
 package com.example.TopTracker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -13,21 +14,20 @@ public class Attempt {
     private String notes;
     private String video; // This needs to be updated to MultipartFile
 
-    private Long user_id;
-    @ManyToOne
-    private Attempt attempts;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
-    public Attempt() {
-    }
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "logbook_id")
+    @JsonIgnore
+    private Logbook logbook;
 
-    public Attempt(Long id, boolean send, String notes, String video, Long user_id, Attempt attempts) {
-        this.id = id;
-        this.send = send;
-        this.notes = notes;
-        this.video = video;
-        this.user_id = user_id;
-        this.attempts = attempts;
-    }
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "boulder_id")
+    @JsonIgnore
+    private Boulder boulder;
 
     public Long getId() {
         return id;
@@ -61,19 +61,28 @@ public class Attempt {
         this.video = video;
     }
 
-    public Long getUser_id() {
-        return user_id;
+
+    public Boulder getBoulder() {
+        return boulder;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setBoulder(Boulder boulder) {
+        this.boulder = boulder;
     }
 
-    public Attempt getAttempts() {
-        return attempts;
+    public User getUser() {
+        return user;
     }
 
-    public void setAttempts(Attempt attempt) {
-        this.attempts = attempt;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Logbook getLogbook() {
+        return logbook;
+    }
+
+    public void setLogbook(Logbook logbook) {
+        this.logbook = logbook;
     }
 }

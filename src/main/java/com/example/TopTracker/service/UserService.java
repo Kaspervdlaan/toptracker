@@ -1,5 +1,6 @@
 package com.example.TopTracker.service;
 
+import com.example.TopTracker.dto.UserCredentialsDto;
 import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
 import com.example.TopTracker.models.Role;
@@ -7,11 +8,14 @@ import com.example.TopTracker.models.User;
 import com.example.TopTracker.repository.AttemptRepository;
 import com.example.TopTracker.repository.RoleRepository;
 import com.example.TopTracker.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -19,11 +23,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    private final PasswordEncoder encoder;
+
     private final AttemptRepository attemptRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, AttemptRepository attemptRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, AttemptRepository attemptRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.encoder = encoder;
         this.attemptRepository = attemptRepository;
     }
 
@@ -33,24 +40,29 @@ public class UserService {
         UserDto userDTO = new UserDto();
 
         u.setUsername(userDto.username);
-        u.setPassword(userDto.password);
+        u.setPassword(encoder.encode(userDto.password));
 
-        if (userDto.role_id != null) {
-            Optional<Role> roleOptional = roleRepository.findById(String.valueOf(userDto.role_id));
+        List<Role> roles = new ArrayList<>();
+            for (String role : userDto.roles) {
+                Optional<Role> or = Optional.ofNullable(roleRepository.findByRolename(role));
 
-            if (roleOptional.isPresent()) {
-                u.setRoles(roleOptional.get());
+                roles.add(or.get());
             }
-        }
 
+            u.setRoles(roles);
 
 
         User user = userRepository.save(u);
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword(user.getPassword());
 
+
         if (user.getRoles() != null) {
-            userDTO.setRole_id(user.getRoles().getRolename());
+            userDTO.setRoles(userDto.getRoles());
+        }
+
+        if (user.getAttempts() != null) {
+            userDTO.setUserId(user.getUserId());
         }
 
         userDTO.setUserId(user.getUserId());
@@ -70,7 +82,15 @@ public class UserService {
             userDto.password = u.getPassword();
 
             if (u.getRoles() != null) {
-                userDto.setRole_id(u.getRoles().getRolename());
+                userDto.setRoles(userDto.getRoles());
+            }
+
+            if (u.getAttempts() != null) {
+                userDto.setAttempts(u.getAttempts());
+            }
+
+            if (u.getLogbook() != null) {
+                userDto.setLogbook_id(u.getLogbook().getId());
             }
             users.add(userDto);
         }
@@ -87,10 +107,28 @@ public class UserService {
         userDto.password = u.getPassword();
 
         if (u.getRoles() != null) {
-            userDto.setRole_id(u.getRoles().getRolename());
+            userDto.setRoles(userDto.getRoles());
+        }
+
+        if (u.getAttempts() != null) {
+            userDto.setAttempts(u.getAttempts());
+        }
+
+        if (u.getLogbook() != null) {
+            userDto.setLogbook_id(u.getLogbook().getId());
         }
 
         return userDto;
+    }
+
+    public List<UserCredentialsDto> getAllUserCredentials(){
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+
+        return users.stream()
+                .map(user -> new UserCredentialsDto(user.getUserId(), user.getUsername(), user.getRoles().stream().map(Role::getRolename).collect(Collectors.toList())))
+                .collect(Collectors.toList());
+
     }
 
     public UserDto updateUser(Long id, UserDto userDto) {
@@ -106,7 +144,6 @@ public class UserService {
     }
 
     public void deleteUserById(Long id) {
-        User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        userRepository.delete(u);
+        userRepository.deleteById(id);
     }
 }

@@ -1,16 +1,24 @@
 package com.example.TopTracker.models;
 import jakarta.persistence.*;
 
-import java.util.List;
-
+import java.util.Collection;
 @Entity
 @Table(name = "roles")
 public class Role {
     @Id
     private String rolename;
 
-    @OneToMany(mappedBy = "roles")
-    private List<User> users;
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
+    private Collection<User> users;
+
+    public Role(String rolename, Collection<User> users) {
+        this.rolename = rolename;
+        this.users = users;
+    }
+
+    public Role() {
+
+    }
 
     public String getRolename() {
         return rolename;
@@ -18,5 +26,13 @@ public class Role {
 
     public void setRolename(String rolename) {
         this.rolename = rolename;
+    }
+
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
     }
 }

@@ -1,8 +1,10 @@
 package com.example.TopTracker.controllers;
 
 import com.example.TopTracker.dto.AreaDto;
-import com.example.TopTracker.models.Area;
+import com.example.TopTracker.dto.BlockDto;
+import com.example.TopTracker.service.AreaBlocksService;
 import com.example.TopTracker.service.AreaService;
+import com.example.TopTracker.service.BlockService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,10 +16,15 @@ import java.util.List;
 public class AreaController {
 
     private final AreaService areaService;
+    private final BlockService blockService;
+
+    private final AreaBlocksService areaBlocksService;
 
 
-    public AreaController(AreaService areaService) {
+    public AreaController(AreaService areaService, BlockService blockService, AreaBlocksService areaBlocksService) {
         this.areaService = areaService;
+        this.blockService = blockService;
+        this.areaBlocksService = areaBlocksService;
     }
 
     @PostMapping
@@ -36,22 +43,28 @@ public class AreaController {
         return ResponseEntity.ok().body(areaDtos);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<AreaDto> getUserById(@PathVariable Long id) {
+    @GetMapping("/{area_id}")
+    public ResponseEntity<AreaDto> getUserById(@PathVariable("area_id") Long id) {
         AreaDto areaDto = areaService.getAreaById(id);
 
         return ResponseEntity.ok(areaDto);
     }
 
-//    @PostMapping("/{area_id}/blocks/{block_id}")
-//    public ResponseEntity<Object> addBlockToArea(@PathVariable("area_id") Long area_id, @PathVariable("block_id") Long block_id) {
-//        areaService.addBlockToArea(area_id, block_id);
-//
-//        return ResponseEntity.noContent().build();
-//    }
+    @PutMapping("/{area_id}/blocks/{block_id}")
+    public ResponseEntity<Object> addBlockToArea(@PathVariable("area_id") Long area_id, @PathVariable("block_id") Long block_id) {
+        AreaDto areaDto = areaBlocksService.addBlockToArea(area_id, block_id);
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Object> updateArea(@PathVariable Long id, @RequestBody AreaDto areaDto) {
+        return ResponseEntity.ok(areaDto);
+    }
+
+    @GetMapping("/{area_id}/blocks")
+    public ResponseEntity<List<BlockDto>> getAreaBlocks(@PathVariable("area_id") Long area_id) {
+        List<BlockDto> blockDtos = areaBlocksService.getAreaBlocks(area_id);
+        return ResponseEntity.ok(blockDtos);
+    }
+
+    @PutMapping("/{area_id}")
+    public ResponseEntity<Object> updateArea(@PathVariable("area_id") Long id, @RequestBody AreaDto areaDto) {
         AreaDto areaDTO = areaService.updateArea(id, areaDto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -60,8 +73,8 @@ public class AreaController {
         return ResponseEntity.created(uri).body(areaDTO);
     }
 
-    @DeleteMapping("{userId}")
-    public ResponseEntity<Object> deleteAreaById(@PathVariable Long id) {
+    @DeleteMapping("/{area_id}")
+    public ResponseEntity<Object> deleteAreaById(@PathVariable("area_id") Long id) {
         areaService.deleteAreaById(id);
         return ResponseEntity.noContent().build();
     }

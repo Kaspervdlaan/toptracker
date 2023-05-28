@@ -1,6 +1,9 @@
 package com.example.TopTracker.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "boulders")
@@ -15,22 +18,13 @@ public class Boulder {
 
     private String boulderImage;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "boulder", cascade = CascadeType.ALL)
+    private List<Attempt> attempts;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "block_id")
+    @JsonIgnore
     private Block block;
-
-    public Boulder() {
-    }
-
-    public Boulder(Long id, String boulderName, String boulderGrade, String holdType, String boulderNotes, String boulderImage, Block block) {
-        this.id = id;
-        this.boulderName = boulderName;
-        this.boulderGrade = boulderGrade;
-        this.holdType = holdType;
-        this.boulderNotes = boulderNotes;
-        this.boulderImage = boulderImage;
-        this.block = block;
-    }
 
     public Long getId() {
         return id;
@@ -86,5 +80,13 @@ public class Boulder {
 
     public void setBlock(Block block) {
         this.block = block;
+    }
+
+    public List<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(List<Attempt> attempts) {
+        this.attempts = attempts;
     }
 }
