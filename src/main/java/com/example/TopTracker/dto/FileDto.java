@@ -2,13 +2,16 @@ package com.example.TopTracker.dto;
 
 public class FileDto {
     String fileName;
+
+    String contentType;
     String url;
 
     public FileDto() {
     }
 
-    public FileDto(String fileName, String url) {
+    public FileDto(String fileName, String contentType, String url) {
         this.fileName = fileName;
+        this.contentType = contentType;
         this.url = url;
     }
 
@@ -27,5 +30,13 @@ public class FileDto {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }

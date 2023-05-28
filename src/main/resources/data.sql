@@ -1,4 +1,5 @@
 insert into roles (rolename) values ('USER'), ('ADMIN');
+
 --insert into users (user_id, username, password, role_name) values (100, 'Admin', '123456', ('ADMIN', 'USER'));
 ----
 --insert into areas (id, name, address, description) values (100, 'Avalonia', 'Duitsland', 'Dug by Daniel the caveman');

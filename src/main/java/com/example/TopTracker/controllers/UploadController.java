@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 @CrossOrigin
 @RestController
@@ -24,22 +25,16 @@ public class UploadController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<FileDto> singleFileUpload(@RequestParam("file")MultipartFile file) throws IOException {
-
-        FileDocument fileDocument = uploadService.uploadFile(file);
-        FileDto fileDto = uploadService.convertToDto(fileDocument);
-        return new ResponseEntity<>(fileDto, HttpStatus.CREATED);
-
-
-//        FileDto fileDto = uploadService.uploadFile(file);
-//
-//        String contentType = file.getContentType();
-//
-//        return new FileDto(fileDto.getFileName(), contentType, url);
+    public FileDto singleFileUpload(@RequestParam( value = "file") MultipartFile file ) throws IOException {
+        String fileName = System.currentTimeMillis() + "-" + new Random().nextInt(1000) + "-" + file.getOriginalFilename();
+        FileDocument fileDocument = uploadService.uploadFile(fileName, file);
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(fileName).toUriString();
+        String contentType = file.getContentType();
+        return new FileDto(fileDocument.getFileName(), contentType, url);
     }
 
-//    @GetMapping("/download/{filename}")
-//    ResponseEntity<byte[]> singleFileDownload(@PathVariable String fileName, HttpServletRequest request) {
-//        return uploadService.downloadFile(fileName, request);
-//    }
+    @GetMapping("/download/{fileName}")
+    ResponseEntity<byte[]> singleFileDownload(@PathVariable String fileName, HttpServletRequest request) {
+        return uploadService.downloadFile(fileName, request);
+    }
 }

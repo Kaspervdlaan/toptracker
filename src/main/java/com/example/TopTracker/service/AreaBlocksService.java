@@ -51,9 +51,16 @@ public class AreaBlocksService {
         Area area = areaRepository.findById(areaId).orElseThrow(() -> new RuntimeException("Not found"));
         Block block = blockRepository.findById(blockId).orElseThrow(() -> new RuntimeException("Not found"));
 
-        List<Block> blocks = area.getBlocks();
+        List<Block> blocks;
+        if (area.getBlocks() != null) {
+            blocks = area.getBlocks();
+        }
+        else {
+            blocks = new ArrayList<>();
+        }
         blocks.add(block);
         area.setBlocks(blocks);
+
 
         Area a = areaRepository.save(area);
 
