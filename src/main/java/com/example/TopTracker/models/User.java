@@ -25,6 +25,17 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Attempt> attempts;
 
+    @OneToMany(mappedBy = "user")
+    private List<FileDocument> fileDocuments;
+
+    public List<FileDocument> getFileDocuments() {
+        return fileDocuments;
+    }
+
+    public void setFileDocuments(List<FileDocument> fileDocuments) {
+        this.fileDocuments = fileDocuments;
+    }
+
     public Long getUserId() {
         return userId;
     }
