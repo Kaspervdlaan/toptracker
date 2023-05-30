@@ -18,9 +18,20 @@ public class UserDto {
 
     public Long logbook_id;
 
+    public List<byte[]> docFiles;
+
+    public List<byte[]> getDocFiles() {
+        return docFiles;
+    }
+
+    public void setDocFiles(List<byte[]> docFiles) {
+        this.docFiles = docFiles;
+    }
+
     public String[] getRoles() {
         return roles;
     }
+
 
     public void setRoles(String[] roles) {
         this.roles = roles;

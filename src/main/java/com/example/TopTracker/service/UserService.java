@@ -1,15 +1,19 @@
 package com.example.TopTracker.service;
 
+import com.example.TopTracker.JwtUtils.JwtUtils;
 import com.example.TopTracker.dto.UserCredentialsDto;
 import com.example.TopTracker.dto.UserDto;
 import com.example.TopTracker.exeption.ResourceNotFoundException;
+import com.example.TopTracker.models.FileDocument;
 import com.example.TopTracker.models.Role;
 import com.example.TopTracker.models.User;
 import com.example.TopTracker.repository.AttemptRepository;
 import com.example.TopTracker.repository.RoleRepository;
 import com.example.TopTracker.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +30,10 @@ public class UserService {
     private final PasswordEncoder encoder;
 
     private final AttemptRepository attemptRepository;
+
+    @Autowired
+    private JwtUtils jwtUtils;
+
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, AttemptRepository attemptRepository) {
         this.userRepository = userRepository;
@@ -98,6 +106,39 @@ public class UserService {
         return users;
     }
 
+    public UserDto getMe(String authHeader) {
+        User u = userRepository.findByUsername(jwtUtils.extractUsernameFromToken(authHeader));
+        UserDto userDto = new UserDto();
+
+        userDto.userId = u.getUserId();
+        userDto.username = u.getUsername();
+        userDto.password = u.getPassword();
+
+        if (u.getRoles() != null) {
+            userDto.setRoles(userDto.getRoles());
+        }
+
+        if (u.getAttempts() != null) {
+            userDto.setAttempts(u.getAttempts());
+        }
+
+        if (u.getLogbook() != null) {
+            userDto.setLogbook_id(u.getLogbook().getId());
+        }
+
+        if (u.getFileDocuments() != null) {
+            List<byte[]> bytes = new ArrayList<>();
+            List<FileDocument> documents = u.getFileDocuments();
+            for (FileDocument f : documents) {
+                f.getDocFile();
+                bytes.add(f.getDocFile());
+            }
+            userDto.setDocFiles(bytes);
+        }
+
+        return userDto;
+    }
+
     public UserDto getUserById(Long id) {
         User u = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         UserDto userDto = new UserDto();
@@ -133,6 +174,18 @@ public class UserService {
 
     public UserDto updateUser(Long id, UserDto userDto) {
         User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        u.setUsername(userDto.getUsername());
+        u.setPassword(userDto.getPassword());
+
+        userRepository.save(u);
+        userDto.userId = u.getUserId();
+        userRepository.save(u);
+        return userDto;
+    }
+
+    public UserDto updateMe(UserDto userDto, String authHeader) {
+        User u = userRepository.findByUsername(jwtUtils.extractUsernameFromToken(authHeader));
 
         u.setUsername(userDto.getUsername());
         u.setPassword(userDto.getPassword());

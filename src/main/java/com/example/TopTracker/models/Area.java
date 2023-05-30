@@ -17,8 +17,10 @@ public class Area {
     private String address;
     private String description;
 
+
     @OneToMany(mappedBy = "area", cascade = CascadeType.ALL)
     private List<Block> blocks;
+
 
     public Long getId() {
         return id;
