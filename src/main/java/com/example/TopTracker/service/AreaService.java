@@ -79,53 +79,6 @@ public class AreaService {
         return areaDto;
     }
 
-
-//
-//    public List<BlockDto> getAreaBlocks(Long areaId) {
-//        Optional<Area> optionalArea = areaRepository.findById(areaId);
-//
-//        if (optionalArea.isPresent()) {
-//            List<Block> blocks = optionalArea.get().getBlocks();
-//
-//            List<BlockDto> blockDtos = new ArrayList<>();
-//            for (Block block : blocks) {
-//                BlockDto blockDto = new BlockDto();
-//                blockDto.setId(block.getId());
-//                blockDto.setBlockName(block.getBlockName());
-//                blockDto.setStoneType(block.getStoneType());
-//                blockDto.setArea_id(block.getArea().getId());
-//                blockDtos.add(blockDto);
-//            } return blockDtos;
-//        } return null;
-////    }
-//
-//    public AreaDto addBlockToArea(Long areaId, Long blockId) {
-//        Optional<Area> optionalArea = areaRepository.findById(areaId);
-//        Optional<Block> optionalBlock = blockRepository.findById(blockId);
-//
-//        if (optionalBlock.isPresent() && optionalArea.isPresent()) {
-//            Area a = optionalArea.get();
-//            Block b = optionalBlock.get();
-//
-//            List<Block> blocks = a.getBlocks();
-//            blocks.add(b);
-//            a.setBlocks(blocks);
-//
-//            Area a1 = areaRepository.save(a);
-//            return areaModelToDto(a1);
-//        } return null;
-//    }
-//
-//    public AreaDto areaModelToDto(Area area) {
-//        AreaDto areaDto = new AreaDto();
-//
-//        areaDto.setBlocks(area.getBlocks());
-//        return areaDto;
-//    }
-//
-//
-
-
     public AreaDto updateArea(Long id, AreaDto areaDto) {
         Area a = areaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 

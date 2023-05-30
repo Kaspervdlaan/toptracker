@@ -22,6 +22,15 @@ public class Block {
     @OneToMany(mappedBy = "block", cascade = CascadeType.ALL)
     private List<Boulder> boulders;
 
+    public Block() {
+    }
+
+    public Block(Long id, String blockName, String stoneType) {
+        this.id = id;
+        this.blockName = blockName;
+        this.stoneType = stoneType;
+    }
+
     public Long getId() {
         return id;
     }
