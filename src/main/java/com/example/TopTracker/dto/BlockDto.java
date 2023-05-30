@@ -12,6 +12,15 @@ public class BlockDto {
     public List<Boulder> boulders;
     public Long area_id;
 
+    public BlockDto() {
+    }
+
+    public BlockDto(Long id, String blockName, String stoneType) {
+        this.id = id;
+        this.blockName = blockName;
+        this.stoneType = stoneType;
+    }
+
     public Long getId() {
         return id;
     }

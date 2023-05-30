@@ -26,6 +26,13 @@ public class Boulder {
     @JsonIgnore
     private Block block;
 
+    public Boulder() {
+    }
+
+    public Boulder(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
