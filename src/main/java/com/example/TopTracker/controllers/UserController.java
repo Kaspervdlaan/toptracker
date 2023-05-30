@@ -35,15 +35,8 @@ public class UserController {
         return ResponseEntity.created(uri).body(u);
     }
 
-
     @GetMapping
     public ResponseEntity<List<UserDto>> getUsers() {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (auth.getPrincipal() instanceof UserDetails) {
-//            UserDetails userDetails = (UserDetails) auth.getPrincipal();
-//
-//        }
-
         List<UserDto> userDtos = userService.getAllUsers();
 
         return ResponseEntity.ok().body(userDtos);
@@ -54,6 +47,12 @@ public class UserController {
     public ResponseEntity<UserDto> getUserById(@PathVariable("userId") Long id) {
         UserDto userDto = userService.getUserById(id);
 
+        return ResponseEntity.ok().body(userDto);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDto> getMe(@RequestHeader("Authorization") String authHeader) {
+        UserDto userDto = userService.getMe(authHeader);
         return ResponseEntity.ok().body(userDto);
     }
 
@@ -71,6 +70,17 @@ public class UserController {
 
         return ResponseEntity.created(uri).body(userDTO);
     }
+
+    @PutMapping("/update/me")
+    public ResponseEntity<Object> updateUser(@RequestHeader("Authorization") String authHeader, @RequestBody UserDto userDto) {
+        UserDto userDTO = userService.updateMe(userDto, authHeader);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .buildAndExpand(userDTO).toUri();
+
+        return ResponseEntity.created(uri).body(userDTO);
+    }
+
     @DeleteMapping("/{userId}")
     public ResponseEntity<Object> deleteUserById(@PathVariable("userId") Long id) {
         userService.deleteUserById(id);
